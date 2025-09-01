@@ -331,10 +331,131 @@
         </div>
       </div>
 
-      <!-- Kanban (placeholder) -->
-      <div id="tab-kanban"
-        class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card p-6">
-        <p class="text-slate-600 dark:text-slate-400 text-sm">Kanban próximamente…</p>
+      <!-- Kanban Board -->
+      <div id="tab-kanban" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Columna: Borrador -->
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-gray-500 rounded-full"></span>
+                  Borrador
+                </h3>
+                <span class="kanban-count bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 text-xs px-2 py-1 rounded-full">1</span>
+              </div>
+            </div>
+            <div class="kanban-cards p-3 min-h-[400px] space-y-3" data-status="BORRADOR">
+              <!-- Tarjeta de prueba estática -->
+              <div class="kanban-card bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 cursor-move shadow-sm hover:shadow-md transition-shadow" 
+                   draggable="true" 
+                   data-position="UX/UI Designer Test" 
+                   data-state="BORRADOR">
+                <div class="flex items-start justify-between mb-3">
+                  <h4 class="font-semibold text-slate-800 dark:text-slate-200 text-sm leading-tight">UX/UI Designer Test</h4>
+                  <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">BORRADOR</span>
+                </div>
+                
+                <div class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                  <div class="flex items-center gap-2">
+                    <span>🏢</span>
+                    <span>Diseño</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>👥</span>
+                    <span>0 aplicaciones</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>👤</span>
+                    <span>María Rodríguez</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>📅</span>
+                    <span>hace 2 horas</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna: Activa -->
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                  Activa
+                </h3>
+                <span class="kanban-count bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 text-xs px-2 py-1 rounded-full">1</span>
+              </div>
+            </div>
+            <div class="kanban-cards p-3 min-h-[400px] space-y-3" data-status="ACTIVA">
+              <!-- Tarjeta de prueba estática -->
+              <div class="kanban-card bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 cursor-move shadow-sm hover:shadow-md transition-shadow" 
+                   draggable="true" 
+                   data-position="React Developer Test" 
+                   data-state="ACTIVA">
+                <div class="flex items-start justify-between mb-3">
+                  <h4 class="font-semibold text-slate-800 dark:text-slate-200 text-sm leading-tight">React Developer Test</h4>
+                  <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">ACTIVA</span>
+                </div>
+                
+                <div class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                  <div class="flex items-center gap-2">
+                    <span>🏢</span>
+                    <span>Tecnología</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>👥</span>
+                    <span>87 aplicaciones</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>👤</span>
+                    <span>Ana García</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span>📅</span>
+                    <span>hace 1 día</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna: Pausada -->
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                  Pausada
+                </h3>
+                <span class="kanban-count bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300 text-xs px-2 py-1 rounded-full">0</span>
+              </div>
+            </div>
+            <div class="kanban-cards p-3 min-h-[400px] space-y-3" data-status="PAUSADA">
+              <!-- Las tarjetas se moverán aquí dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Columna: Cerrada -->
+          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                  Cerrada
+                </h3>
+                <span class="kanban-count bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 text-xs px-2 py-1 rounded-full">0</span>
+              </div>
+            </div>
+            <div class="kanban-cards p-3 min-h-[400px] space-y-3" data-status="CERRADA">
+              <!-- Las tarjetas se moverán aquí dinámicamente -->
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <!-- Analytics (placeholder) -->
@@ -401,162 +522,170 @@
 </main>
 
 <script>
-// Filtros simples para vacantes
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() {
-    console.log('Iniciando filtros de vacantes...');
+// ===== SISTEMA DE FILTROS DE VACANTES =====
+let vacantesFiltersInitialized = false;
+
+function initVacantesFilters() {
+  if (vacantesFiltersInitialized) {
+    console.log('🎯 Filtros de vacantes ya inicializados');
+    return;
+  }
+
+  console.log('🎯 Iniciando filtros de vacantes...');
+  
+  // Elementos
+  const tbody = document.getElementById('jobsTbody');
+  const noRow = document.getElementById('noResultsRow');
+  const searchInput = document.getElementById('fltSearch');
+  const stateSelect = document.getElementById('fltState');
+  const deptSelect = document.getElementById('fltDept');
+  const recruiterSelect = document.getElementById('fltRecruiter');
+  const sortSelect = document.getElementById('fltSort');
+  
+  if (!tbody) {
+    console.error('❌ No se encontró jobsTbody, reintentando...');
+    setTimeout(initVacantesFilters, 200);
+    return;
+  }
+  
+  console.log('✅ Elementos encontrados:', {
+    tbody: !!tbody,
+    searchInput: !!searchInput,
+    stateSelect: !!stateSelect,
+    deptSelect: !!deptSelect,
+    recruiterSelect: !!recruiterSelect,
+    sortSelect: !!sortSelect
+  });
+
+  function removeAccents(str) {
+    return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function filterJobs() {
+    console.log('🔍 Aplicando filtros de vacantes...');
     
-    // Elementos
-    const tbody = document.getElementById('jobsTbody');
-    const noRow = document.getElementById('noResultsRow');
-    const searchInput = document.getElementById('fltSearch');
-    const stateSelect = document.getElementById('fltState');
-    const deptSelect = document.getElementById('fltDept');
-    const recruiterSelect = document.getElementById('fltRecruiter');
-    const sortSelect = document.getElementById('fltSort');
-    
-    if (!tbody) {
-      console.error('No se encontró jobsTbody');
-      return;
-    }
-    
-    console.log('Elementos encontrados:', {
-      tbody: !!tbody,
-      searchInput: !!searchInput,
-      stateSelect: !!stateSelect,
-      deptSelect: !!deptSelect,
-      recruiterSelect: !!recruiterSelect,
-      sortSelect: !!sortSelect
+    const searchTerm = removeAccents(searchInput ? searchInput.value : '');
+    const stateFilter = stateSelect ? stateSelect.value : '';
+    const deptFilter = deptSelect ? deptSelect.value : '';
+    const recruiterFilter = recruiterSelect ? recruiterSelect.value : '';
+    const sortBy = sortSelect ? sortSelect.value : '';
+
+    const allRows = tbody.querySelectorAll('tr[data-position]');
+    const visibleRows = [];
+
+    allRows.forEach(function(row) {
+      let show = true;
+      const data = row.dataset;
+
+      // Filtro de búsqueda
+      if (searchTerm && show) {
+        const searchText = removeAccents(
+          (data.position || '') + ' ' + 
+          (data.department || '') + ' ' + 
+          (data.recruiter || '')
+        );
+        show = searchText.includes(searchTerm);
+      }
+
+      // Filtro por estado
+      if (stateFilter && show) {
+        show = data.state === stateFilter;
+      }
+
+      // Filtro por departamento
+      if (deptFilter && show) {
+        show = data.department === deptFilter;
+      }
+
+      // Filtro por reclutador
+      if (recruiterFilter && show) {
+        show = data.recruiter === recruiterFilter;
+      }
+
+      // Mostrar u ocultar fila
+      if (show) {
+        row.style.display = '';
+        visibleRows.push(row);
+      } else {
+        row.style.display = 'none';
+      }
     });
 
-    function removeAccents(str) {
-      return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-    }
-
-    function filterJobs() {
-      console.log('Aplicando filtros de vacantes...');
+    // Ordenamiento
+    if (sortBy && visibleRows.length > 0) {
+      const stateOrder = {
+        'ACTIVA': 1,
+        'BORRADOR': 2,
+        'PAUSADA': 3,
+        'CERRADA': 4
+      };
       
-      const searchTerm = removeAccents(searchInput ? searchInput.value : '');
-      const stateFilter = stateSelect ? stateSelect.value : '';
-      const deptFilter = deptSelect ? deptSelect.value : '';
-      const recruiterFilter = recruiterSelect ? recruiterSelect.value : '';
-      const sortBy = sortSelect ? sortSelect.value : '';
-
-      const allRows = tbody.querySelectorAll('tr[data-position]');
-      const visibleRows = [];
-
-      allRows.forEach(function(row) {
-        let show = true;
-        const data = row.dataset;
-
-        // Filtro de búsqueda
-        if (searchTerm && show) {
-          const searchText = removeAccents(
-            (data.position || '') + ' ' + 
-            (data.department || '') + ' ' + 
-            (data.recruiter || '')
-          );
-          show = searchText.includes(searchTerm);
-        }
-
-        // Filtro por estado
-        if (stateFilter && show) {
-          show = data.state === stateFilter;
-        }
-
-        // Filtro por departamento
-        if (deptFilter && show) {
-          show = data.department === deptFilter;
-        }
-
-        // Filtro por reclutador
-        if (recruiterFilter && show) {
-          show = data.recruiter === recruiterFilter;
-        }
-
-        // Mostrar u ocultar fila
-        if (show) {
-          row.style.display = '';
-          visibleRows.push(row);
-        } else {
-          row.style.display = 'none';
-        }
-      });
-
-      // Ordenamiento
-      if (sortBy && visibleRows.length > 0) {
-        const stateOrder = {
-          'ACTIVA': 1,
-          'BORRADOR': 2,
-          'PAUSADA': 3,
-          'CERRADA': 4
-        };
+      visibleRows.sort(function(a, b) {
+        const dataA = a.dataset;
+        const dataB = b.dataset;
         
-        visibleRows.sort(function(a, b) {
-          const dataA = a.dataset;
-          const dataB = b.dataset;
-          
-          switch (sortBy) {
-            case 'position':
-              return (dataA.position || '').localeCompare(dataB.position || '');
-            case 'department':
-              return (dataA.department || '').localeCompare(dataB.department || '');
-            case 'date':
-              return new Date(dataB.date || 0) - new Date(dataA.date || 0);
-            case 'state':
-              return (stateOrder[dataA.state] || 999) - (stateOrder[dataB.state] || 999);
-            case 'candidates':
-              return Number(dataB.candidates || 0) - Number(dataA.candidates || 0);
-            default:
-              return 0;
-          }
-        });
-
-        visibleRows.forEach(function(row) {
-          tbody.appendChild(row);
-        });
-      }
-
-      // Mostrar mensaje de sin resultados
-      if (noRow) {
-        if (visibleRows.length === 0) {
-          noRow.style.display = '';
-          tbody.appendChild(noRow);
-        } else {
-          noRow.style.display = 'none';
+        switch (sortBy) {
+          case 'position':
+            return (dataA.position || '').localeCompare(dataB.position || '');
+          case 'department':
+            return (dataA.department || '').localeCompare(dataB.department || '');
+          case 'date':
+            return new Date(dataB.date || 0) - new Date(dataA.date || 0);
+          case 'state':
+            return (stateOrder[dataA.state] || 999) - (stateOrder[dataB.state] || 999);
+          case 'candidates':
+            return Number(dataB.candidates || 0) - Number(dataA.candidates || 0);
+          default:
+            return 0;
         }
-      }
+      });
 
-      console.log('Filtros de vacantes aplicados. Vacantes visibles:', visibleRows.length);
-    }
-
-    // Event listeners
-    let debounceTimer;
-    
-    if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(filterJobs, 300);
+      visibleRows.forEach(function(row) {
+        tbody.appendChild(row);
       });
     }
 
-    if (stateSelect) {
-      stateSelect.addEventListener('change', filterJobs);
+    // Mostrar mensaje de sin resultados
+    if (noRow) {
+      if (visibleRows.length === 0) {
+        noRow.style.display = '';
+        tbody.appendChild(noRow);
+      } else {
+        noRow.style.display = 'none';
+      }
     }
 
-    if (deptSelect) {
-      deptSelect.addEventListener('change', filterJobs);
-    }
+    console.log(`🔍 Filtros aplicados: ${visibleRows.length} vacantes visibles`);
+  }
 
-    if (recruiterSelect) {
-      recruiterSelect.addEventListener('change', filterJobs);
-    }
+  // Event listeners
+  let debounceTimer;
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(filterJobs, 300);
+    });
+  }
 
-    if (sortSelect) {
-      sortSelect.addEventListener('change', filterJobs);
-    }
+  if (stateSelect) {
+    stateSelect.addEventListener('change', filterJobs);
+  }
 
-    // Acciones de botones
+  if (deptSelect) {
+    deptSelect.addEventListener('change', filterJobs);
+  }
+
+  if (recruiterSelect) {
+    recruiterSelect.addEventListener('change', filterJobs);
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener('change', filterJobs);
+  }
+
+  // Acciones de botones
+  if (tbody) {
     tbody.addEventListener('click', function(e) {
       const button = e.target.closest('button');
       if (!button) return;
@@ -589,10 +718,256 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('Acción no reconocida:', action);
       }
     });
+  }
 
-    // Aplicar filtros iniciales
-    filterJobs();
-    console.log('Filtros de vacantes inicializados correctamente');
+  // Aplicar filtros iniciales
+  filterJobs();
+  vacantesFiltersInitialized = true;
+  console.log('✅ Filtros de vacantes inicializados correctamente');
+}
+
+// Inicializar filtros cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(initVacantesFilters, 300);
+
+  // ===== SISTEMA DE TABS =====
+  setTimeout(() => {
+    const tabButtons = document.querySelectorAll('[data-tab]');
+    const tabContents = {
+      'lista': document.getElementById('tab-lista'),
+      'kanban': document.getElementById('tab-kanban'),
+      'analytics': document.getElementById('tab-analytics')
+    };
+
+    let activeTab = 'lista';
+
+    function switchTab(tabName) {
+      console.log(`🎯 Cambiando a tab: ${tabName}`);
+      
+      // Actualizar botones
+      tabButtons.forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add('bg-fortia-primary', 'text-white');
+          btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
+        } else {
+          btn.classList.remove('bg-fortia-primary', 'text-white');
+          btn.classList.add('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
+        }
+      });
+
+      // Actualizar contenidos
+      Object.keys(tabContents).forEach(tab => {
+        if (tab === tabName) {
+          tabContents[tab].classList.remove('hidden');
+        } else {
+          tabContents[tab].classList.add('hidden');
+        }
+      });
+
+      // Si cambiamos a Kanban, inicializar las tarjetas y drag & drop
+      if (tabName === 'kanban') {
+        initKanban();
+        // Asegurar que el drag & drop esté funcionando
+        setTimeout(() => {
+          initDragAndDrop();
+          console.log('🎯 Drag & Drop reinicializado para Kanban');
+        }, 100);
+      }
+      
+      // Si cambiamos a lista, asegurar que los filtros estén funcionando
+      if (tabName === 'lista') {
+        setTimeout(() => {
+          if (!vacantesFiltersInitialized) {
+            initVacantesFilters();
+          }
+          console.log('🎯 Filtros de lista verificados');
+        }, 100);
+      }
+
+      activeTab = tabName;
+    }
+
+    // Event listeners para tabs
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchTab(btn.dataset.tab);
+      });
+    });
+
+    // ===== SISTEMA KANBAN =====
+    function initKanban() {
+      console.log('🎯 Inicializando Kanban...');
+      updateKanbanCounts();
+      initDragAndDrop();
+    }
+
+    function updateKanbanCounts() {
+      const columns = document.querySelectorAll('.kanban-cards');
+      columns.forEach(column => {
+        const cards = column.querySelectorAll('.kanban-card');
+        const count = cards.length;
+        const countBadge = column.parentElement.querySelector('.kanban-count');
+        if (countBadge) {
+          countBadge.textContent = count;
+        }
+      });
+    }
+
+    // Variables globales para drag and drop
+    let draggedCard = null;
+
+    function initDragAndDrop() {
+      console.log('Inicializando drag and drop...');
+      
+      // Remover event listeners existentes para evitar duplicados
+      document.removeEventListener('dragstart', handleDragStart);
+      document.removeEventListener('dragend', handleDragEnd);
+      
+      // Agregar event listeners
+      document.addEventListener('dragstart', handleDragStart);
+      document.addEventListener('dragend', handleDragEnd);
+
+      // Configurar columnas
+      document.querySelectorAll('.kanban-cards').forEach(column => {
+        // Remover listeners existentes
+        column.removeEventListener('dragover', handleDragOver);
+        column.removeEventListener('dragleave', handleDragLeave);
+        column.removeEventListener('drop', handleDrop);
+        
+        // Agregar nuevos listeners
+        column.addEventListener('dragover', handleDragOver);
+        column.addEventListener('dragleave', handleDragLeave);
+        column.addEventListener('drop', handleDrop);
+      });
+
+      console.log('Drag and drop configurado correctamente');
+    }
+
+    function handleDragStart(e) {
+      if (e.target.classList.contains('kanban-card')) {
+        draggedCard = e.target;
+        e.target.style.opacity = '0.5';
+        e.target.classList.add('dragging');
+        console.log('🎯 Drag iniciado:', e.target.dataset.position);
+      }
+    }
+
+    function handleDragEnd(e) {
+      if (e.target.classList.contains('kanban-card')) {
+        e.target.style.opacity = '1';
+        e.target.classList.remove('dragging');
+        draggedCard = null;
+        console.log('🎯 Drag terminado');
+      }
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+      console.log('🎯 Drag over columna:', e.currentTarget.dataset.status);
+    }
+
+    function handleDragLeave(e) {
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        e.currentTarget.classList.remove('drag-over');
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const column = e.currentTarget;
+      column.classList.remove('drag-over');
+      
+      if (draggedCard) {
+        const newStatus = column.dataset.status;
+        const oldStatus = draggedCard.dataset.state;
+        
+        console.log(`🎯 Drop: ${oldStatus} → ${newStatus}`);
+        
+        if (newStatus !== oldStatus) {
+          // Mover la tarjeta
+          column.appendChild(draggedCard);
+          
+          // Actualizar el estado de la tarjeta
+          draggedCard.dataset.state = newStatus;
+          
+          // Actualizar el badge de estado en la tarjeta
+          const stateBadge = draggedCard.querySelector('span[class*="px-2 py-1 rounded-full"]');
+          if (stateBadge) {
+            const stateColors = {
+              'BORRADOR': 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+              'ACTIVA': 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
+              'PAUSADA': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
+              'CERRADA': 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
+            };
+            stateBadge.className = `text-xs px-2 py-1 rounded-full ${stateColors[newStatus]}`;
+            stateBadge.textContent = newStatus;
+          }
+          
+          // Actualizar contadores
+          updateKanbanCounts();
+          
+          // Mostrar notificación de éxito
+          console.log(`✅ Vacante "${draggedCard.dataset.position}" movida de ${oldStatus} a ${newStatus}`);
+          
+          // Mostrar notificación visual (opcional)
+          showNotification(`Vacante movida a ${newStatus}`, 'success');
+        }
+      }
+    }
+
+    function showNotification(message, type = 'info') {
+      // Crear notificación temporal
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 transition-all duration-300 ${
+        type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+      }`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      // Remover después de 3 segundos
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    console.log('Sistema de tabs y Kanban inicializado');
+
+    // Agregar estilos CSS para drag and drop
+    const style = document.createElement('style');
+    style.textContent = `
+      .kanban-card.dragging {
+        transform: rotate(5deg);
+        z-index: 1000;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      }
+      
+      .kanban-cards.drag-over {
+        background-color: rgba(59, 130, 246, 0.1) !important;
+        border: 2px dashed #3b82f6 !important;
+        border-radius: 8px;
+      }
+      
+      .kanban-card {
+        transition: all 0.2s ease;
+      }
+      
+      .kanban-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Inicializar drag and drop inmediatamente para las tarjetas estáticas
+    initDragAndDrop();
+    
+    // Asegurar que los filtros estén inicializados
+    if (!vacantesFiltersInitialized) {
+      console.log('🎯 Inicializando filtros desde sistema de tabs...');
+      initVacantesFilters();
+    }
     
   }, 500);
 });

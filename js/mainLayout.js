@@ -93,6 +93,15 @@ class MainLayoutApp {
   }
 
   async loadViewScript(viewName) {
+    // Lista de vistas que tienen archivos JavaScript
+    const viewsWithScripts = ['dashboard', 'vacantes', 'candidatos'];
+    
+    // Solo intentar cargar script si la vista está en la lista
+    if (!viewsWithScripts.includes(viewName)) {
+      console.log(`View "${viewName}" does not require a JavaScript file`);
+      return;
+    }
+
     try {
       // Verificar si ya existe el script
       const existingScript = document.querySelector(`script[data-view="${viewName}"]`);
@@ -105,11 +114,12 @@ class MainLayoutApp {
       script.src = `js/views/${viewName}.js`;
       script.setAttribute('data-view', viewName);
       script.onerror = () => {
-        console.log(`No JavaScript file found for view: ${viewName}`);
+        console.log(`Failed to load JavaScript file for view: ${viewName}`);
       };
       document.head.appendChild(script);
+      console.log(`JavaScript loaded for view: ${viewName}`);
     } catch (error) {
-      console.log(`No JavaScript file for view: ${viewName}`);
+      console.log(`Error loading JavaScript file for view: ${viewName}`, error);
     }
   }
 
