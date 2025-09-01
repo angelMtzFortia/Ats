@@ -726,249 +726,273 @@ function initVacantesFilters() {
   console.log('✅ Filtros de vacantes inicializados correctamente');
 }
 
-// Inicializar filtros cuando el DOM esté listo
+// ===== VARIABLES GLOBALES =====
+let vacantesSystemsInitialized = false;
+let draggedCard = null;
+
+// ===== INICIALIZACIÓN PRINCIPAL =====
 document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(initVacantesFilters, 300);
-
-  // ===== SISTEMA DE TABS =====
+  console.log('🎯 Iniciando sistemas de vacantes...');
+  
   setTimeout(() => {
-    const tabButtons = document.querySelectorAll('[data-tab]');
-    const tabContents = {
-      'lista': document.getElementById('tab-lista'),
-      'kanban': document.getElementById('tab-kanban'),
-      'analytics': document.getElementById('tab-analytics')
-    };
-
-    let activeTab = 'lista';
-
-    function switchTab(tabName) {
-      console.log(`🎯 Cambiando a tab: ${tabName}`);
-      
-      // Actualizar botones
-      tabButtons.forEach(btn => {
-        if (btn.dataset.tab === tabName) {
-          btn.classList.add('bg-fortia-primary', 'text-white');
-          btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
-        } else {
-          btn.classList.remove('bg-fortia-primary', 'text-white');
-          btn.classList.add('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
-        }
-      });
-
-      // Actualizar contenidos
-      Object.keys(tabContents).forEach(tab => {
-        if (tab === tabName) {
-          tabContents[tab].classList.remove('hidden');
-        } else {
-          tabContents[tab].classList.add('hidden');
-        }
-      });
-
-      // Si cambiamos a Kanban, inicializar las tarjetas y drag & drop
-      if (tabName === 'kanban') {
-        initKanban();
-        // Asegurar que el drag & drop esté funcionando
-        setTimeout(() => {
-          initDragAndDrop();
-          console.log('🎯 Drag & Drop reinicializado para Kanban');
-        }, 100);
-      }
-      
-      // Si cambiamos a lista, asegurar que los filtros estén funcionando
-      if (tabName === 'lista') {
-        setTimeout(() => {
-          if (!vacantesFiltersInitialized) {
-            initVacantesFilters();
-          }
-          console.log('🎯 Filtros de lista verificados');
-        }, 100);
-      }
-
-      activeTab = tabName;
+    if (!vacantesSystemsInitialized) {
+      initAllVacanteSystems();
+      vacantesSystemsInitialized = true;
     }
+  }, 300);
+});
 
-    // Event listeners para tabs
+function initAllVacanteSystems() {
+  console.log('🎯 Inicializando todos los sistemas de vacantes...');
+  
+  // Inicializar filtros
+  initVacantesFilters();
+  
+  // Inicializar sistema de tabs
+  initTabSystem();
+  
+  // Inicializar Kanban
+  initKanbanSystem();
+  
+  console.log('✅ Todos los sistemas de vacantes inicializados');
+}
+
+// ===== SISTEMA DE TABS =====
+function initTabSystem() {
+  console.log('🎯 Inicializando sistema de tabs...');
+  
+  const tabButtons = document.querySelectorAll('[data-tab]');
+  const tabContents = {
+    'lista': document.getElementById('tab-lista'),
+    'kanban': document.getElementById('tab-kanban'),
+    'analytics': document.getElementById('tab-analytics')
+  };
+
+  let activeTab = 'lista';
+
+  function switchTab(tabName) {
+    console.log(`🎯 Cambiando a tab: ${tabName}`);
+    
+    // Actualizar botones
     tabButtons.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchTab(btn.dataset.tab);
-      });
+      if (btn.dataset.tab === tabName) {
+        btn.classList.add('bg-fortia-primary', 'text-white');
+        btn.classList.remove('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
+      } else {
+        btn.classList.remove('bg-fortia-primary', 'text-white');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400', 'hover:text-slate-800', 'dark:hover:text-slate-200');
+      }
     });
 
-    // ===== SISTEMA KANBAN =====
-    function initKanban() {
-      console.log('🎯 Inicializando Kanban...');
-      updateKanbanCounts();
-      initDragAndDrop();
-    }
-
-    function updateKanbanCounts() {
-      const columns = document.querySelectorAll('.kanban-cards');
-      columns.forEach(column => {
-        const cards = column.querySelectorAll('.kanban-card');
-        const count = cards.length;
-        const countBadge = column.parentElement.querySelector('.kanban-count');
-        if (countBadge) {
-          countBadge.textContent = count;
-        }
-      });
-    }
-
-    // Variables globales para drag and drop
-    let draggedCard = null;
-
-    function initDragAndDrop() {
-      console.log('Inicializando drag and drop...');
-      
-      // Remover event listeners existentes para evitar duplicados
-      document.removeEventListener('dragstart', handleDragStart);
-      document.removeEventListener('dragend', handleDragEnd);
-      
-      // Agregar event listeners
-      document.addEventListener('dragstart', handleDragStart);
-      document.addEventListener('dragend', handleDragEnd);
-
-      // Configurar columnas
-      document.querySelectorAll('.kanban-cards').forEach(column => {
-        // Remover listeners existentes
-        column.removeEventListener('dragover', handleDragOver);
-        column.removeEventListener('dragleave', handleDragLeave);
-        column.removeEventListener('drop', handleDrop);
-        
-        // Agregar nuevos listeners
-        column.addEventListener('dragover', handleDragOver);
-        column.addEventListener('dragleave', handleDragLeave);
-        column.addEventListener('drop', handleDrop);
-      });
-
-      console.log('Drag and drop configurado correctamente');
-    }
-
-    function handleDragStart(e) {
-      if (e.target.classList.contains('kanban-card')) {
-        draggedCard = e.target;
-        e.target.style.opacity = '0.5';
-        e.target.classList.add('dragging');
-        console.log('🎯 Drag iniciado:', e.target.dataset.position);
+    // Actualizar contenidos
+    Object.keys(tabContents).forEach(tab => {
+      if (tab === tabName) {
+        tabContents[tab].classList.remove('hidden');
+      } else {
+        tabContents[tab].classList.add('hidden');
       }
-    }
+    });
 
-    function handleDragEnd(e) {
-      if (e.target.classList.contains('kanban-card')) {
-        e.target.style.opacity = '1';
-        e.target.classList.remove('dragging');
-        draggedCard = null;
-        console.log('🎯 Drag terminado');
-      }
-    }
-
-    function handleDragOver(e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('drag-over');
-      console.log('🎯 Drag over columna:', e.currentTarget.dataset.status);
-    }
-
-    function handleDragLeave(e) {
-      if (!e.currentTarget.contains(e.relatedTarget)) {
-        e.currentTarget.classList.remove('drag-over');
-      }
-    }
-
-    function handleDrop(e) {
-      e.preventDefault();
-      const column = e.currentTarget;
-      column.classList.remove('drag-over');
-      
-      if (draggedCard) {
-        const newStatus = column.dataset.status;
-        const oldStatus = draggedCard.dataset.state;
-        
-        console.log(`🎯 Drop: ${oldStatus} → ${newStatus}`);
-        
-        if (newStatus !== oldStatus) {
-          // Mover la tarjeta
-          column.appendChild(draggedCard);
-          
-          // Actualizar el estado de la tarjeta
-          draggedCard.dataset.state = newStatus;
-          
-          // Actualizar el badge de estado en la tarjeta
-          const stateBadge = draggedCard.querySelector('span[class*="px-2 py-1 rounded-full"]');
-          if (stateBadge) {
-            const stateColors = {
-              'BORRADOR': 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-              'ACTIVA': 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
-              'PAUSADA': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
-              'CERRADA': 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
-            };
-            stateBadge.className = `text-xs px-2 py-1 rounded-full ${stateColors[newStatus]}`;
-            stateBadge.textContent = newStatus;
-          }
-          
-          // Actualizar contadores
-          updateKanbanCounts();
-          
-          // Mostrar notificación de éxito
-          console.log(`✅ Vacante "${draggedCard.dataset.position}" movida de ${oldStatus} a ${newStatus}`);
-          
-          // Mostrar notificación visual (opcional)
-          showNotification(`Vacante movida a ${newStatus}`, 'success');
-        }
-      }
-    }
-
-    function showNotification(message, type = 'info') {
-      // Crear notificación temporal
-      const notification = document.createElement('div');
-      notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 transition-all duration-300 ${
-        type === 'success' ? 'bg-green-500' : 'bg-blue-500'
-      }`;
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      
-      // Remover después de 3 segundos
+    // Acciones específicas por tab
+    if (tabName === 'kanban') {
       setTimeout(() => {
-        notification.remove();
-      }, 3000);
+        initKanban();
+        console.log('🎯 Kanban activado');
+      }, 100);
     }
 
-    console.log('Sistema de tabs y Kanban inicializado');
+    activeTab = tabName;
+  }
 
-    // Agregar estilos CSS para drag and drop
-    const style = document.createElement('style');
-    style.textContent = `
-      .kanban-card.dragging {
-        transform: rotate(5deg);
-        z-index: 1000;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      }
-      
-      .kanban-cards.drag-over {
-        background-color: rgba(59, 130, 246, 0.1) !important;
-        border: 2px dashed #3b82f6 !important;
-        border-radius: 8px;
-      }
-      
-      .kanban-card {
-        transition: all 0.2s ease;
-      }
-      
-      .kanban-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      }
-    `;
-    document.head.appendChild(style);
+  // Event listeners para tabs
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab(btn.dataset.tab);
+    });
+  });
+  
+  console.log('✅ Sistema de tabs inicializado');
+}
 
-    // Inicializar drag and drop inmediatamente para las tarjetas estáticas
-    initDragAndDrop();
+// ===== SISTEMA KANBAN =====
+function initKanbanSystem() {
+  console.log('🎯 Inicializando sistema Kanban...');
+  
+  // Agregar estilos CSS para drag and drop
+  addKanbanStyles();
+  
+  console.log('✅ Sistema Kanban preparado');
+}
+
+function initKanban() {
+  console.log('🎯 Activando Kanban...');
+  updateKanbanCounts();
+  initDragAndDrop();
+}
+
+function updateKanbanCounts() {
+  const columns = document.querySelectorAll('.kanban-cards');
+  columns.forEach(column => {
+    const cards = column.querySelectorAll('.kanban-card');
+    const count = cards.length;
+    const countBadge = column.parentElement.querySelector('.kanban-count');
+    if (countBadge) {
+      countBadge.textContent = count;
+    }
+  });
+  console.log('📊 Contadores de Kanban actualizados');
+}
+
+function initDragAndDrop() {
+  console.log('🎯 Inicializando drag and drop...');
+  
+  // Remover event listeners existentes para evitar duplicados
+  document.removeEventListener('dragstart', handleDragStart);
+  document.removeEventListener('dragend', handleDragEnd);
+  
+  // Agregar event listeners
+  document.addEventListener('dragstart', handleDragStart);
+  document.addEventListener('dragend', handleDragEnd);
+
+  // Configurar columnas
+  document.querySelectorAll('.kanban-cards').forEach(column => {
+    // Remover listeners existentes
+    column.removeEventListener('dragover', handleDragOver);
+    column.removeEventListener('dragleave', handleDragLeave);
+    column.removeEventListener('drop', handleDrop);
     
-    // Asegurar que los filtros estén inicializados
-    if (!vacantesFiltersInitialized) {
-      console.log('🎯 Inicializando filtros desde sistema de tabs...');
-      initVacantesFilters();
+    // Agregar nuevos listeners
+    column.addEventListener('dragover', handleDragOver);
+    column.addEventListener('dragleave', handleDragLeave);
+    column.addEventListener('drop', handleDrop);
+  });
+
+  console.log('✅ Drag and drop configurado correctamente');
+}
+
+// ===== FUNCIONES DE DRAG AND DROP =====
+function handleDragStart(e) {
+  if (e.target.classList.contains('kanban-card')) {
+    draggedCard = e.target;
+    e.target.style.opacity = '0.5';
+    e.target.classList.add('dragging');
+    console.log('🎯 Drag iniciado:', e.target.dataset.position);
+  }
+}
+
+function handleDragEnd(e) {
+  if (e.target.classList.contains('kanban-card')) {
+    e.target.style.opacity = '1';
+    e.target.classList.remove('dragging');
+    draggedCard = null;
+    console.log('🎯 Drag terminado');
+  }
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+  console.log('🎯 Drag over columna:', e.currentTarget.dataset.status);
+}
+
+function handleDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  const column = e.currentTarget;
+  column.classList.remove('drag-over');
+  
+  if (draggedCard) {
+    const newStatus = column.dataset.status;
+    const oldStatus = draggedCard.dataset.state;
+    
+    console.log(`🎯 Drop: ${oldStatus} → ${newStatus}`);
+    
+    if (newStatus !== oldStatus) {
+      // Mover la tarjeta
+      column.appendChild(draggedCard);
+      
+      // Actualizar el estado de la tarjeta
+      draggedCard.dataset.state = newStatus;
+      
+      // Actualizar el badge de estado en la tarjeta
+      const stateBadge = draggedCard.querySelector('span[class*="px-2 py-1 rounded-full"]');
+      if (stateBadge) {
+        const stateColors = {
+          'BORRADOR': 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+          'ACTIVA': 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300',
+          'PAUSADA': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300',
+          'CERRADA': 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
+        };
+        stateBadge.className = `text-xs px-2 py-1 rounded-full ${stateColors[newStatus]}`;
+        stateBadge.textContent = newStatus;
+      }
+      
+      // Actualizar contadores
+      updateKanbanCounts();
+      
+      // Mostrar notificación de éxito
+      console.log(`✅ Vacante "${draggedCard.dataset.position}" movida de ${oldStatus} a ${newStatus}`);
+      
+      // Mostrar notificación visual
+      showKanbanNotification(`Vacante movida a ${newStatus}`, 'success');
+    }
+  }
+}
+
+function showKanbanNotification(message, type = 'info') {
+  // Crear notificación temporal
+  const notification = document.createElement('div');
+  notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 transition-all duration-300 ${
+    type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+  }`;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  // Remover después de 3 segundos
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+function addKanbanStyles() {
+  // Verificar si ya existen los estilos
+  if (document.getElementById('kanban-styles')) {
+    return;
+  }
+  
+  const style = document.createElement('style');
+  style.id = 'kanban-styles';
+  style.textContent = `
+    .kanban-card.dragging {
+      transform: rotate(5deg);
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
     
-  }, 500);
-});
+    .kanban-cards.drag-over {
+      background-color: rgba(59, 130, 246, 0.1) !important;
+      border: 2px dashed #3b82f6 !important;
+      border-radius: 8px;
+    }
+    
+    .kanban-card {
+      transition: all 0.2s ease;
+    }
+    
+    .kanban-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+  `;
+  document.head.appendChild(style);
+  console.log('✅ Estilos de Kanban agregados');
+}
+
+console.log('🎯 Sistemas de vacantes completamente cargados');
 </script>
