@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fortia · Recruiting Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
+          colors: { fortia: { primary: '#004176', accent: '#FF005C' } },
+          boxShadow: { card: '0 2px 8px rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  </script>
+
+  <!-- Reglas para el modo colapsado (rail) -->
+  <style>
+    /* Oculta textos y badges cuando está colapsado */
+    #sidebar[data-collapsed="true"] .label { display: none; }
+    #sidebar[data-collapsed="true"] .brand-full { display: none; }
+    #sidebar[data-collapsed="false"] .brand-mini { display: none; }
+    /* Centra iconos y quita gaps al colapsar */
+    #sidebar[data-collapsed="true"] .nav-icon { justify-content: center; }
+    #sidebar[data-collapsed="true"] .nav-item { gap: 0; }
+  </style>
+</head>
+
+<body class="bg-[#F5F9FF] text-slate-800">
+  <!-- Overlay móvil -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/30 z-30 hidden"></div>
+
+  <div class="flex min-h-screen">
+    <!-- SIDEBAR (off-canvas en móvil, rail colapsable en desktop) -->
+    <aside
+      id="sidebar"
+      data-collapsed="false"
+      class="fixed md:static inset-y-0 left-0 z-40 w-64 md:w-64 bg-white border-r border-gray-200 transform translate-x-0 md:translate-x-0 md:flex flex-col transition-all duration-300">
+
+      <!-- Brand -->
+      <div class="h-16 flex items-center px-4 border-b">
+        <img src="../assets/images/logo_Human_Fortia.png" alt="Fortia" class="brand-full h-7">
+        <div class="brand-mini w-8 h-8 rounded-lg bg-fortia-primary/10 grid place-items-center ml-1">
+          <span class="text-fortia-primary font-bold">F</span>
+        </div>
+      </div>
+
+      <!-- Menú -->
+      <nav class="flex-1 overflow-y-auto p-4 space-y-6">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2 label">Vacantes</p>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" title="Dashboard"
+                 class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg bg-blue-50 text-fortia-primary font-medium">
+                <span class="nav-icon w-8 h-8 grid place-items-center">🏠</span>
+                <span class="label">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Vacantes" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">➕</span>
+                <span class="label">Vacantes</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Candidatos" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">👤</span>
+                <span class="label">Candidatos</span>
+                <span class="ml-auto text-xs bg-green-100 text-green-700 px-2 rounded label">NEW</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2 label">Datos</p>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" title="Diccionario" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">📚</span>
+                <span class="label">Diccionario</span>
+                <span class="ml-auto text-xs bg-gray-100 px-2 rounded label">15</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Administración" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">⚙️</span>
+                <span class="label">Administración</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Análisis" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">📊</span>
+                <span class="label">Análisis</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Transferencia" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">🔄</span>
+                <span class="label">Transferencia</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2 label">Ajustes</p>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" title="Mi organización" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">🏢</span>
+                <span class="label">Mi organización</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Usuarios" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">👥</span>
+                <span class="label">Usuarios</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" title="Mis procesos" class="nav-item flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50">
+                <span class="nav-icon w-8 h-8 grid place-items-center">⚡</span>
+                <span class="label">Mis procesos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="mt-auto border-t p-4 space-y-2">
+        <a href="#" title="Settings" class="flex items-center gap-3 text-sm text-gray-700 hover:underline">
+          <span class="nav-icon w-8 h-8 grid place-items-center">⚙️</span>
+          <span class="label">Settings</span>
+        </a>
+        <a href="#" title="Logout" class="flex items-center gap-3 text-sm text-gray-700 hover:underline">
+          <span class="nav-icon w-8 h-8 grid place-items-center">↪</span>
+          <span class="label">Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="flex-1 flex flex-col">
+      <!-- Topbar -->
+      <header class="h-16 bg-white border-b flex items-center justify-between px-4">
+        <!-- Botón hamburguesa -->
+        <button id="sidebarToggle" class="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 shadow-sm">
+          <svg class="w-6 h-6 text-fortia-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <button class="hidden md:flex items-center gap-2 bg-fortia-primary text-white px-3 py-2 rounded" onclick="window.location.href='nueva-vacante.html'">
+          + Nueva Vacante
+        </button>
+
+        <div class="flex-1 max-w-xl mx-4">
+          <div class="relative">
+            <input type="search" placeholder="Type to search"
+              class="w-full rounded border border-gray-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100"/>
+            <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span>📧</span>
+          <span>🔔</span>
+          <div class="w-8 h-8 bg-gray-200 rounded-full grid place-items-center font-semibold">M</div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="p-6 grid grid-cols-1 xl:grid-cols-12 gap-6">
+        <!-- KPIs columna izquierda -->
+        <section class="xl:col-span-9 space-y-4">
+          <!-- KPIs fila 1 -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+              <span class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+10%</span>
+              <p class="text-sm text-slate-500">Vacantes Activas</p>
+              <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">24</p>
+            </div>
+            <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+              <span class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+25%</span>
+              <p class="text-sm text-slate-500">Candidatos Nuevos</p>
+              <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">89</p>
+            </div>
+            <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+              <span class="absolute top-3 right-3 inline-flex items-center text-rose-700 text-[11px] bg-rose-50 px-2 py-0.5 rounded-lg font-medium">-5%</span>
+              <p class="text-sm text-slate-500">Entrevistas Hoy</p>
+              <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">12</p>
+            </div>
+            <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+              <span class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+8%</span>
+              <p class="text-sm text-slate-500">Entrevistas</p>
+              <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">12</p>
+            </div>
+          </div>
+
+          <!-- KPIs compactos + Actividad -->
+          <section class="xl:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- KPIs compactos con scroll -->
+            <div class="col-span-12 bg-white rounded-2xl border border-slate-200/60 shadow-card p-4 w-full max-h-64 overflow-y-auto">
+              <div class="grid grid-cols-2 gap-6">
+                <!-- Aplicados -->
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1 text-slate-600 text-sm">
+                    <svg class="h-4 w-4 text-fortia-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/>
+                    </svg>
+                    <span>Aplicados</span>
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <p class="text-3xl font-bold text-fortia-primary">45</p>
+                    <span class="inline-flex items-center gap-1 text-xs text-emerald-600">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 7-7"/></svg>
+                      +15%
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Entrevistas -->
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1 text-slate-600 text-sm">
+                    <svg class="h-4 w-4 text-fortia-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-3M9 20H4v-2a4 4 0 014-4h3"/><circle cx="12" cy="7" r="4" stroke-width="2"/>
+                    </svg>
+                    <span>Entrevistas</span>
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <p class="text-3xl font-bold text-fortia-primary">12</p>
+                    <span class="inline-flex items-center gap-1 text-xs text-emerald-600">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 7-7"/></svg>
+                      +8%
+                    </span>
+                  </div>
+                </div>
+
+                <!-- En Revisión -->
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1 text-slate-600 text-sm">
+                    <span class="text-fortia-primary">🔍</span><span>En Revisión</span>
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <p class="text-3xl font-bold text-fortia-primary">8</p>
+                    <span class="inline-flex items-center gap-1 text-xs text-rose-600">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 18l6-6M17 12l6 6"/></svg>
+                      -5%
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Ofertas -->
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1 text-slate-600 text-sm">
+                    <span class="text-fortia-primary">📋</span><span>Ofertas</span>
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <p class="text-3xl font-bold text-fortia-primary">3</p>
+                    <span class="inline-flex items-center gap-1 text-xs text-emerald-600">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 7-7"/></svg>
+                      +2
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Contratados -->
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-1 text-slate-600 text-sm">
+                    <span class="text-fortia-primary">✅</span><span>Contratados</span>
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <p class="text-3xl font-bold text-fortia-primary">1</p>
+                    <span class="inline-flex items-center gap-1 text-xs text-emerald-600">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17l6-6 4 4 7-7"/></svg>
+                      +1
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actividad (scroll) -->
+            <div class="md:col-span-2 bg-white rounded-2xl border border-slate-200/60 shadow-card p-6">
+              <div class="max-h-72 md:max-h-96 overflow-y-auto pr-2 space-y-6">
+                <!-- Items de actividad (8) -->
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Nueva aplicación</p>
+                    <p class="text-sm text-slate-600">María García aplicó a Frontend Developer</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 5 minutos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-violet-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3h8v4M5 21h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Entrevista programada</p>
+                    <p class="text-sm text-slate-600">Carlos Mendoza — Frontend Developer a las 10:00</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 15 minutos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18V8H3v8z"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Correo enviado</p>
+                    <p class="text-sm text-slate-600">Invitación a prueba técnica — UX Designer</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 25 minutos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a2 2 0 011.789 1.122l1.498 3.132a2 2 0 01-.45 2.11l-2.16 2.16a11.042 11.042 0 005.516 5.516l2.16-2.16a2 2 0 012.11-.45l3.132 1.498A2 2 0 0121 17.72V21a2 2 0 01-2 2h-1C7.163 23 1 16.837 1 9V8a2 2 0 012-2z"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Llamada realizada</p>
+                    <p class="text-sm text-slate-600">Contacto con Laura Pérez por WhatsApp</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 35 minutos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-amber-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M9 8h6M5 6h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Estado actualizado</p>
+                    <p class="text-sm text-slate-600">Kevin Ríos pasó a En Revisión</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 50 minutos</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M3 11l8 8 10-10-8-8H3v10z"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Etiqueta aplicada</p>
+                    <p class="text-sm text-slate-600">Candidato marcado como “Senior”</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 1 hora</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10l9-7 9 7-9 7-9-7zM3 19l9-7 9 7"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Prueba técnica enviada</p>
+                    <p class="text-sm text-slate-600">Rol: DevOps Engineer</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 2 horas</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">
+                    <svg class="w-5 h-5 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-800">Oferta aceptada</p>
+                    <p class="text-sm text-slate-600">Data Analyst — incorporación en 2 semanas</p>
+                    <p class="text-xs text-slate-400 mt-1">hace 3 horas</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- Right rail -->
+        <aside class="xl:col-span-3 space-y-4">
+          <div class="bg-white p-4 rounded-xl shadow-card">
+            <p class="font-medium mb-3">Quick Actions</p>
+            <button class="w-full flex justify-between items-center px-3 py-2 rounded bg-red-50 text-red-600">
+              + Nueva Vacante <span class="text-xs">Ctrl+N</span>
+            </button>
+            <button class="w-full flex justify-between items-center px-3 py-2 mt-2 rounded bg-blue-50 text-blue-600">
+              👤 Ver Candidatos <span class="text-xs">Ctrl+K</span>
+            </button>
+          </div>
+          <div class="bg-white p-4 rounded-xl shadow-card">
+            <p class="font-medium mb-2">Matching</p>
+            <div class="text-sm bg-yellow-50 border border-yellow-200 p-3 rounded">
+              3 candidatos tienen alto match (≥85%) con Frontend Developer
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-xl shadow-card">
+            <p class="font-medium">Ofertas Pendientes</p>
+            <p class="text-3xl font-bold text-fortia-primary mt-2">7</p>
+            <span class="text-xs text-red-600">-2%</span>
+          </div>
+        </aside>
+
+        <!-- Cards de vacantes -->
+        <section class="xl:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+            <span class="absolute top-2 right-2 text-yellow-500">⚡</span>
+            <p class="text-base font-semibold text-fortia-primary">Frontend Developer</p>
+            <p class="text-xs text-slate-500 mb-4">TECNOLOGÍA</p>
+            <div class="flex justify-between items-center text-sm text-slate-600">
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-3M9 20H4v-2a4 4 0 014-4h3"/><circle cx="12" cy="7" r="4" stroke-width="2"/></svg>23
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>2h
+              </span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+            <span class="absolute top-2 right-2 text-rose-500">📌</span>
+            <p class="text-base font-semibold text-fortia-primary">UX Designer</p>
+            <p class="text-xs text-slate-500 mb-4">DISEÑO</p>
+            <div class="flex justify-between items-center text-sm text-slate-600">
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-3M9 20H4v-2a4 4 0 014-4h3"/><circle cx="12" cy="7" r="4" stroke-width="2"/></svg>15
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>1d
+              </span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+            <span class="absolute top-2 right-2 text-orange-500">🔥</span>
+            <p class="text-base font-semibold text-fortia-primary">DevOps Engineer</p>
+            <p class="text-xs text-slate-500 mb-4">INFRAESTRUCTURA</p>
+            <div class="flex justify-between items-center text-sm text-slate-600">
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-3M9 20H4v-2a4 4 0 014-4h3"/><circle cx="12" cy="7" r="4" stroke-width="2"/></svg>8
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>3h
+              </span>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+            <span class="absolute top-2 right-2 text-slate-500">📝</span>
+            <p class="text-base font-semibold text-fortia-primary">Data Analyst</p>
+            <p class="text-xs text-slate-500 mb-4">ANALYTICS</p>
+            <div class="flex justify-between items-center text-sm text-slate-600">
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-3M9 20H4v-2a4 4 0 014-4h3"/><circle cx="12" cy="7" r="4" stroke-width="2"/></svg>12
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>5h
+              </span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toggle Sidebar -->
+  <script>
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const sidebar  = document.getElementById('sidebar');
+    const overlay  = document.getElementById('sidebar-overlay');
+    const mqDesktop = window.matchMedia('(min-width: 768px)');
+
+    // Off-canvas (móvil)
+    function openSidebarMobile() {
+      sidebar.classList.remove('-translate-x-full');
+      sidebar.classList.add('translate-x-0');
+      overlay.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeSidebarMobile() {
+      sidebar.classList.add('-translate-x-full');
+      sidebar.classList.remove('translate-x-0');
+      overlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Rail collapse (desktop)
+    function toggleDesktopRail() {
+      const collapsed = sidebar.getAttribute('data-collapsed') === 'true';
+      if (collapsed) {
+        // expandir
+        sidebar.setAttribute('data-collapsed','false');
+        sidebar.classList.remove('md:w-20');
+        sidebar.classList.add('md:w-64');
+      } else {
+        // colapsar
+        sidebar.setAttribute('data-collapsed','true');
+        sidebar.classList.remove('md:w-64');
+        sidebar.classList.add('md:w-20');
+      }
+    }
+
+    // Click hamburguesa
+    toggleBtn.addEventListener('click', () => {
+      if (mqDesktop.matches) {
+        // Desktop: colapsa/expande rail
+        toggleDesktopRail();
+      } else {
+        // Móvil: abre/cierra off-canvas
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        if (isOpen) closeSidebarMobile(); else openSidebarMobile();
+      }
+    });
+
+    // Cerrar overlay en móvil
+    overlay.addEventListener('click', closeSidebarMobile);
+
+    // Sincroniza estado al cambiar tamaño
+    function syncOnResize() {
+      if (mqDesktop.matches) {
+        // Asegura visible en desktop y oculta overlay
+        overlay.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+      } else {
+        // En móvil empieza cerrado
+        closeSidebarMobile();
+      }
+    }
+    window.addEventListener('resize', syncOnResize);
+    // Estado inicial coherente
+    syncOnResize();
+  </script>
+</body>
+</html>

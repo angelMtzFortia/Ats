@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fortia · Recruiting Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: { fortia: { primary: '#004176', accent: '#FF005C' } },
+          boxShadow: { card: '0 2px 8px rgba(0,0,0,0.05)' }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-[#F5F9FF] text-slate-800">
+
+  <!-- MAIN GRID -->
+  <main class="p-6 grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+    <!-- ===== FILA 1: KPIs A TODO LO ANCHO ===== -->
+    <section class="xl:col-span-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- KPI 1 -->
+        <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+          <span
+            class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+10%</span>
+          <p class="text-sm text-slate-500">Vacantes Activas</p>
+          <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">24</p>
+        </div>
+        <!-- KPI 2 -->
+        <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+          <span
+            class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+25%</span>
+          <p class="text-sm text-slate-500">Candidatos Nuevos</p>
+          <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">89</p>
+        </div>
+        <!-- KPI 3 -->
+        <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+          <span
+            class="absolute top-3 right-3 inline-flex items-center text-rose-700 text-[11px] bg-rose-50 px-2 py-0.5 rounded-lg font-medium">-5%</span>
+          <p class="text-sm text-slate-500">Entrevistas Hoy</p>
+          <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">12</p>
+        </div>
+        <!-- KPI 4 -->
+        <div class="relative bg-white rounded-2xl p-5 shadow-card border border-slate-100">
+          <span
+            class="absolute top-3 right-3 inline-flex items-center text-emerald-700 text-[11px] bg-emerald-50 px-2 py-0.5 rounded-lg font-medium">+8%</span>
+          <p class="text-sm text-slate-500">Ofertas Pendientes</p>
+          <p class="mt-3 text-4xl leading-none font-semibold text-fortia-primary">12</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FILA 2: CONTENIDO PRINCIPAL IZQUIERDA (9/12) ===== -->
+    <section class="xl:col-span-9 space-y-4">
+      <!-- KPIs compactos con scroll -->
+      <div
+        class="col-span-12 bg-white rounded-2xl border border-slate-200/60 shadow-card p-4 w-full max-h-64 overflow-y-auto">
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Aplicados -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1 text-slate-600 text-sm">
+              <span class="text-fortia-primary">👤</span><span>Aplicados</span>
+            </div>
+            <div class="mt-2 flex items-end gap-2">
+              <p class="text-3xl font-bold text-fortia-primary">45</p>
+              <span class="inline-flex items-center gap-1 text-xs text-emerald-600">+15%</span>
+            </div>
+          </div>
+          <!-- Entrevistas -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1 text-slate-600 text-sm">
+              <span class="text-fortia-primary">📅</span><span>Entrevistas</span>
+            </div>
+            <div class="mt-2 flex items-end gap-2">
+              <p class="text-3xl font-bold text-fortia-primary">12</p>
+              <span class="inline-flex items-center gap-1 text-xs text-emerald-600">+8%</span>
+            </div>
+          </div>
+          <!-- En Revisión -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1 text-slate-600 text-sm">
+              <span class="text-fortia-primary">🔍</span><span>En Revisión</span>
+            </div>
+            <div class="mt-2 flex items-end gap-2">
+              <p class="text-3xl font-bold text-fortia-primary">8</p>
+              <span class="inline-flex items-center gap-1 text-xs text-rose-600">-5%</span>
+            </div>
+          </div>
+          <!-- Ofertas -->
+          <div class="flex flex-col">
+            <div class="flex items-center gap-1 text-slate-600 text-sm">
+              <span class="text-fortia-primary">📋</span><span>Ofertas</span>
+            </div>
+            <div class="mt-2 flex items-end gap-2">
+              <p class="text-3xl font-bold text-fortia-primary">3</p>
+              <span class="inline-flex items-center gap-1 text-xs text-emerald-600">+2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actividad (lista larga con scroll) -->
+      <div class="bg-white rounded-2xl border border-slate-200/60 shadow-card p-6">
+        <h3 class="text-lg font-semibold text-slate-800 mb-4">Actividad Reciente</h3>
+
+        <!-- controla altura + scroll -->
+        <div class="max-h-60 md:max-h-78 overflow-y-auto pr-2">
+          <ul class="space-y-5">
+
+            <!-- 1 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">➕</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Nueva aplicación</p>
+                <p class="text-sm text-slate-600">María García aplicó a Frontend Developer</p>
+                <p class="text-xs text-slate-400 mt-1">hace 5 minutos</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 2 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">🗓️</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Entrevista programada</p>
+                <p class="text-sm text-slate-600">Carlos Mendoza — Frontend Developer a las 10:00</p>
+                <p class="text-xs text-slate-400 mt-1">hace 15 minutos</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 3 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">✉️</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Email enviado</p>
+                <p class="text-sm text-slate-600">Invitación de entrevista enviada a Ana López</p>
+                <p class="text-xs text-slate-400 mt-1">hace 2 horas</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 4 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">📄</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Oferta enviada</p>
+                <p class="text-sm text-slate-600">Ana Rodríguez — UX Designer, $85,000</p>
+                <p class="text-xs text-slate-400 mt-1">hace 3 horas</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 5 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">✅</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Candidato contratado</p>
+                <p class="text-sm text-slate-600">Pedro Ortega — Data Analyst</p>
+                <p class="text-xs text-slate-400 mt-1">hace 4 horas</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 6 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">🔁</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Estado actualizado</p>
+                <p class="text-sm text-slate-600">Kevin Ríos pasó a En Revisión</p>
+                <p class="text-xs text-slate-400 mt-1">hace 5 horas</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+            <!-- 7 -->
+            <li class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-full bg-slate-100 grid place-items-center shadow-inner">🏷️</div>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-slate-800">Etiqueta aplicada</p>
+                <p class="text-sm text-slate-600">Candidato marcado como “Senior”</p>
+                <p class="text-xs text-slate-400 mt-1">ayer</p>
+              </div>
+              <svg class="w-5 h-5 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== FILA 2: RAIL DERECHO (3/12) ===== -->
+    <!-- ===== FILA 2: RAIL DERECHO (3/12) ===== -->
+    <aside class="xl:col-span-3 space-y-4">
+      <div class="bg-white p-4 rounded-xl shadow-card">
+        <p class="font-medium mb-3">Quick Actions</p>
+        <button class="w-full flex justify-between items-center px-3 py-2 rounded bg-red-50 text-red-600">
+          + Nueva Vacante <span class="text-xs">Ctrl+N</span>
+        </button>
+        <button class="w-full flex justify-between items-center px-3 py-2 mt-2 rounded bg-blue-50 text-blue-600">
+          👤 Ver Candidatos <span class="text-xs">Ctrl+K</span>
+        </button>
+      </div>
+
+      <!-- Matching / AI Insights -->
+      <div class="bg-white rounded-xl shadow-card border border-slate-200 p-4 flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="relative w-9 h-9 rounded-lg bg-fortia-primary/10 grid place-items-center text-fortia-primary">
+              <span class="text-lg">🤖</span>
+              <span class="absolute inline-flex h-9 w-9 rounded-lg animate-ping bg-fortia-primary/10"></span>
+            </div>
+            <p class="font-medium text-slate-800">Matching / AI Insights</p>
+          </div>
+
+          <button id="insightsRefresh"
+            class="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 active:scale-[.98] transition">
+            <span class="inline-block" id="refreshIcon">🔄</span> Actualizar
+          </button>
+        </div>
+
+        <!-- List (altura controlada + scroll) -->
+        <div class="min-h-[180px] max-h-80 overflow-y-auto pr-1">
+          <ul class="space-y-2 text-sm">
+
+            <!-- PRIORIDAD ALTA -->
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50/60 p-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-base">🎯</span>
+                  <span class="text-[11px] font-semibold tracking-wide text-amber-700">MATCHING · ALTA</span>
+                </div>
+                <p class="text-slate-800">
+                  3 candidatos tienen alto match (≥85%) con <span class="font-medium">Frontend Developer</span>
+                </p>
+                <div class="mt-1 flex items-center gap-2 text-[11px] text-slate-500">
+                  <span>hace 2 minutos</span>
+                  <span class="ml-2 inline-flex items-center rounded bg-emerald-100 px-2 py-[2px] text-emerald-700">
+                    Accionable
+                  </span>
+                </div>
+              </div>
+              <span class="text-slate-300 text-lg">→</span>
+            </li>
+
+            <!-- PRIORIDAD MEDIA -->
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-blue-200 bg-blue-50/60 p-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-base">📈</span>
+                  <span class="text-[11px] font-semibold tracking-wide text-blue-700">PERFORMANCE · MEDIA</span>
+                </div>
+                <p class="text-slate-800">
+                  Tiempo de respuesta mejoró <span class="font-medium">15%</span> esta semana
+                </p>
+                <div class="mt-1 text-[11px] text-slate-500">hace 10 minutos</div>
+              </div>
+              <span class="text-slate-300 text-lg">→</span>
+            </li>
+
+            <!-- PRIORIDAD ALTA -->
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50/60 p-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-base">⚡</span>
+                  <span class="text-[11px] font-semibold tracking-wide text-amber-700">OPTIMIZACIÓN · ALTA</span>
+                </div>
+                <p class="text-slate-800">
+                  Ajustar descripción de <span class="font-medium">Backend Engineer</span> puede aumentar aplicaciones
+                  <span class="font-medium">20%</span>
+                </p>
+                <div class="mt-1 flex items-center gap-2 text-[11px] text-slate-500">
+                  <span>hace 25 minutos</span>
+                  <span class="ml-2 inline-flex items-center rounded bg-emerald-100 px-2 py-[2px] text-emerald-700">
+                    Accionable
+                  </span>
+                </div>
+              </div>
+              <span class="text-slate-300 text-lg">→</span>
+            </li>
+
+            <!-- PRIORIDAD URGENTE -->
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-rose-200 bg-rose-50/60 p-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-base">⚠️</span>
+                  <span class="text-[11px] font-semibold tracking-wide text-rose-700">ALERTA · URGENTE</span>
+                </div>
+                <p class="text-slate-800">5 candidatos próximos a vencer en pipeline</p>
+                <div class="mt-1 flex items-center gap-2 text-[11px] text-slate-500">
+                  <span>hace 1 hora</span>
+                  <span class="ml-2 inline-flex items-center rounded bg-emerald-100 px-2 py-[2px] text-emerald-700">
+                    Accionable
+                  </span>
+                </div>
+              </div>
+              <span class="text-slate-300 text-lg">→</span>
+            </li>
+
+            <!-- PRIORIDAD BAJA -->
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-base">📊</span>
+                  <span class="text-[11px] font-semibold tracking-wide text-slate-700">TENDENCIA · BAJA</span>
+                </div>
+                <p class="text-slate-800">
+                  Aplicaciones de <span class="font-medium">UX Designer</span> aumentaron 40% vs mes anterior
+                </p>
+                <div class="mt-1 text-[11px] text-slate-500">hace 2 horas</div>
+              </div>
+              <span class="text-slate-300 text-lg">→</span>
+            </li>
+
+          </ul>
+        </div> <!-- ⟵ CIERRE del div con min/max height -->
+      </div> <!-- ⟵ CIERRE del card “Matching / AI Insights” -->
+    </aside>
+
+
+    <!-- ===== FILA 3: CARDS DE VACANTES A TODO LO ANCHO ===== -->
+    <section class="xl:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+        <span class="absolute top-2 right-2 text-yellow-500">⚡</span>
+        <p class="text-base font-semibold text-fortia-primary">Frontend Developer</p>
+        <p class="text-xs text-slate-500 mb-4">TECNOLOGÍA</p>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>👥 23</span>
+          <span>⏱️ 2h</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+        <span class="absolute top-2 right-2 text-rose-500">📌</span>
+        <p class="text-base font-semibold text-fortia-primary">UX Designer</p>
+        <p class="text-xs text-slate-500 mb-4">DISEÑO</p>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>👥 15</span>
+          <span>⏱️ 1d</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+        <span class="absolute top-2 right-2 text-orange-500">🔥</span>
+        <p class="text-base font-semibold text-fortia-primary">DevOps Engineer</p>
+        <p class="text-xs text-slate-500 mb-4">INFRAESTRUCTURA</p>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>👥 8</span>
+          <span>⏱️ 3h</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 shadow-card p-5 relative">
+        <span class="absolute top-2 right-2 text-slate-500">📝</span>
+        <p class="text-base font-semibold text-fortia-primary">Data Analyst</p>
+        <p class="text-xs text-slate-500 mb-4">ANALYTICS</p>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>👥 12</span>
+          <span>⏱️ 5h</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

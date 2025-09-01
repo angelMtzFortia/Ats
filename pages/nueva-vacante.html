@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Fortia · Nueva Vacante (Wizard)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
+          colors: { fortia:{ primary:'#004176', accent:'#7C3AED', soft:'#EEF6FF' } },
+          boxShadow:{ card:'0 2px 10px rgba(16,24,40,.06)' }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F5F9FF] text-slate-800">
+  <!-- Header simple -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <nav class="text-sm text-slate-500">
+        <a href="../MainLayout.html" class="hover:underline">Dashboard</a>
+        <span class="mx-2">›</span>
+        <span class="inline-flex items-center gap-2 text-fortia-primary font-semibold">
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-100">NEW</span>
+          Nueva Vacante
+        </span>
+      </nav>
+      <img src="../assets/images/logo_Human_Fortia.png" class="h-6" alt="Fortia">
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 pt-6 pb-24">
+    <h1 class="text-2xl font-semibold text-slate-900">Crear Nueva Vacante</h1>
+    <p class="text-slate-600 mt-1">Utiliza nuestro asistente para crear vacantes efectivas que atraigan el mejor talento.</p>
+
+    <!-- Steps -->
+    <section class="mt-6 bg-white rounded-2xl shadow-card border border-slate-200">
+      <div class="px-6 pt-6">
+        <ol class="grid grid-cols-4 items-center gap-6">
+          <li class="step-item col-span-1 text-center">
+            <div class="step-dot inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-fortia-primary bg-white text-fortia-primary font-semibold">1</div>
+            <p class="mt-2 text-sm font-semibold text-slate-900 step-label">Información Básica</p>
+          </li>
+          <li class="step-item col-span-1 text-center opacity-60">
+            <div class="step-dot inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-slate-300 bg-white text-slate-500 font-semibold">2</div>
+            <p class="mt-2 text-sm font-semibold text-slate-600 step-label">Detalles Puesto</p>
+          </li>
+          <li class="step-item col-span-1 text-center opacity-60">
+            <div class="step-dot inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-slate-300 bg-white text-slate-500 font-semibold">3</div>
+            <p class="mt-2 text-sm font-semibold text-slate-600 step-label">Requisitos</p>
+          </li>
+          <li class="step-item col-span-1 text-center opacity-60">
+            <div class="step-dot inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-slate-300 bg-white text-slate-500 font-semibold">4</div>
+            <p class="mt-2 text-sm font-semibold text-slate-600 step-label">Vista Previa</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="mt-6 h-px bg-slate-100"></div>
+
+      <!-- Content -->
+      <div class="p-6">
+        <!-- Paso 1 -->
+        <form id="step-1" class="step-pane grid grid-cols-12 gap-6">
+          <div class="col-span-12">
+            <h2 class="text-lg font-semibold">Paso 1: Información Básica</h2>
+            <p class="text-sm text-slate-500">Define los aspectos fundamentales de la vacante</p>
+          </div>
+
+          <!-- título -->
+          <div class="col-span-12 lg:col-span-6">
+            <label class="block text-sm font-medium mb-1">Título del puesto <span class="text-rose-600">*</span></label>
+            <input id="titulo" type="text" placeholder="Ej: Desarrollador Frontend Senior, Gerente de Marketing…"
+                   class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 placeholder:text-slate-400">
+            <p class="text-xs text-slate-500 mt-1">Sé específico y claro. Un buen título atrae a los candidatos correctos.</p>
+          </div>
+
+          <!-- justificación -->
+          <div class="col-span-12 lg:col-span-6">
+            <div class="flex items-center justify-between">
+              <label class="block text-sm font-medium mb-1">Justificación de la vacante <span class="text-rose-600">*</span></label>
+              <span class="text-xs text-slate-400"><span id="charCount">0</span>/20 caracteres</span>
+            </div>
+            <textarea id="justificacion" rows="5"
+              placeholder="Explica por qué es necesario este puesto:&#10;• ¿Qué problema resolverá?&#10;• ¿Cómo impactará al negocio?&#10;• ¿Es una posición nueva o reemplazo?"
+              class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 placeholder:text-slate-400"></textarea>
+
+            <div class="flex gap-3 mt-3">
+              <button type="button" id="btnIA"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-fortia.accent text-white hover:opacity-95"
+                style="background:#7C3AED">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9H3"/></svg>
+                Generar con IA
+              </button>
+              <p id="iaHint" class="hidden text-sm text-slate-500 self-center">→ (demo) Inserta un ejemplo de justificación.</p>
+            </div>
+          </div>
+
+          <!-- departamento -->
+          <div class="col-span-12 lg:col-span-6">
+            <label class="block text-sm font-medium mb-1">Departamento <span class="text-rose-600">*</span></label>
+            <select id="departamento" class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+              <option value="">Selecciona el departamento</option>
+              <option value="Tecnología">Tecnología</option>
+              <option value="Diseño">Diseño</option>
+              <option value="Operaciones">Operaciones</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Ventas">Ventas</option>
+              <option value="Recursos Humanos">Recursos Humanos</option>
+            </select>
+            <p class="text-xs text-slate-500 mt-1">Selecciona el departamento al que reportará este puesto.</p>
+          </div>
+
+          <!-- prioridad -->
+          <div class="col-span-12 lg:col-span-6">
+            <label class="block text-sm font-medium mb-2">Prioridad de contratación <span class="text-rose-600">*</span></label>
+            <div id="prioridad" class="grid grid-cols-3 overflow-hidden rounded-xl border border-slate-200">
+              <button type="button" data-value="Alta"  class="seg-btn px-6 py-3 text-center font-semibold bg-rose-50 text-rose-700 focus:outline-none">Alta</button>
+              <button type="button" data-value="Media" class="seg-btn px-6 py-3 text-center font-semibold bg-white text-slate-700 border-x border-slate-200">Media</button>
+              <button type="button" data-value="Baja"  class="seg-btn px-6 py-3 text-center font-semibold bg-white text-slate-700">Baja</button>
+            </div>
+            <div class="mt-3 flex items-start gap-2 text-sm">
+              <span class="mt-0.5 text-yellow-500">●</span>
+              <p class="text-slate-600"><strong class="text-slate-800">Media:</strong> Proceso estándar, tiempo estimado 4–6 semanas. Flujo de aprobación normal.</p>
+            </div>
+          </div>
+
+          <!-- Tips -->
+          <div class="col-span-12 lg:col-span-6 lg:col-start-7">
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+              <div class="flex items-center gap-2 text-emerald-700 font-semibold mb-2">
+                <span>💡</span><span>Tips para un mejor resultado</span>
+              </div>
+              <ul class="text-sm text-emerald-800 space-y-1 max-h-40 overflow-y-auto pr-1">
+                <li>• Usa títulos específicos y descriptivos.</li>
+                <li>• Incluye el nivel de experiencia en el título.</li>
+                <li>• La justificación debe ser clara y objetiva.</li>
+                <li>• Define responsabilidades clave en “Detalles del Puesto”.</li>
+                <li>• Prioridad “Alta” acelera aprobaciones internas.</li>
+              </ul>
+            </div>
+          </div>
+        </form>
+
+        <!-- Paso 2 -->
+        <form id="step-2" class="step-pane hidden grid grid-cols-12 gap-6">
+          <div class="col-span-12">
+            <h2 class="text-lg font-semibold">Paso 2: Detalles del Puesto</h2>
+            <p class="text-sm text-slate-500">Define las características específicas del puesto incluyendo descripción, ubicación y compensación</p>
+          </div>
+
+          <!-- Descripción del puesto -->
+          <div class="col-span-12">
+            <label class="block text-sm font-medium mb-1">Descripción del puesto <span class="text-rose-600">*</span></label>
+            <div class="relative">
+              <textarea id="descPuesto" rows="7"
+                class="w-full rounded-xl border border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 placeholder:text-slate-400"
+                placeholder="Describe las responsabilidades principales, objetivos del puesto y cómo contribuirá al negocio.&#10;Usa viñetas para destacar actividades clave."></textarea>
+
+              <!-- Botón flotante estilo morado -->
+              <button type="button" id="btnGenDesc"
+                class="absolute left-1/2 -translate-x-1/2 -top-3 px-4 py-2 rounded-lg text-white text-[13px] shadow hover:opacity-95"
+                style="background:linear-gradient(90deg,#7C3AED,#6D28D9)">
+                ✨ Generar descripción
+              </button>
+            </div>
+            <div class="mt-1 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Mínimo 50 caracteres. Usa buena descripción para mejorar el match.</span>
+              <span class="text-slate-400"><span id="descCount">0</span>/50</span>
+            </div>
+          </div>
+
+          <!-- Ubicación / Tipo / Experiencia -->
+          <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label class="block text-sm font-medium mb-1">Ubicación <span class="text-rose-600">*</span></label>
+              <input id="ubicacion" type="text" placeholder="Ciudad, Estado / Remoto"
+                     class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Tipo de empleo</label>
+              <select id="tipoEmpleo" class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+                <option value="">Selecciona tipo</option>
+                <option>Tiempo completo</option>
+                <option>Medio tiempo</option>
+                <option>Contrato</option>
+                <option>Prácticas</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Experiencia requerida</label>
+              <select id="experiencia" class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+                <option value="">Selecciona nivel</option>
+                <option>0–1 años</option>
+                <option>2–3 años</option>
+                <option>3–5 años</option>
+                <option>5+ años</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Compensación -->
+          <div class="col-span-12">
+            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-semibold text-slate-800">Compensación (opcional pero recomendado)</p>
+                <label class="inline-flex items-center gap-2 text-xs text-slate-600">
+                  <input id="chkMostrarSalario" type="checkbox" class="rounded border-slate-300">
+                  Incluir salario aumenta resultados ~47%
+                </label>
+              </div>
+
+              <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium mb-1">Salario mínimo</label>
+                  <input id="salMin" type="number" min="0" placeholder="25000"
+                         class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 disabled:bg-slate-50">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Salario máximo</label>
+                  <input id="salMax" type="number" min="0" placeholder="45000"
+                         class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 disabled:bg-slate-50">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Moneda</label>
+                  <select id="moneda" class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 disabled:bg-slate-50">
+                    <option>MXN</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Paso 3 -->
+        <form id="step-3" class="step-pane hidden grid grid-cols-12 gap-6">
+          <div class="col-span-12">
+            <h2 class="text-lg font-semibold">Paso 3: Requisitos y Beneficios</h2>
+            <p class="text-sm text-slate-500">Define los requisitos del puesto y los beneficios que ofrece la empresa</p>
+          </div>
+
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Requisitos -->
+            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="font-semibold text-slate-800 mb-2">Requisitos del puesto</p>
+              <div class="h-44 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3">
+                <ul id="reqList" class="space-y-2 text-sm text-slate-700">
+                  <li>Licenciatura en ingeniería, sistemas o área relacionada</li>
+                  <li>Experiencia comprobable en desarrollo de software</li>
+                  <li>Conocimiento de metodologías ágiles (Scrum, Kanban)</li>
+                  <li>Excelentes habilidades de comunicación técnica</li>
+                </ul>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <input id="reqInput" type="text" placeholder="Escribe un nuevo requisito…"
+                       class="flex-1 rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+                <button type="button" id="btnAddReq" class="px-3 py-2 rounded-lg bg-fortia-primary text-white text-sm hover:opacity-95">Agregar</button>
+              </div>
+            </div>
+
+            <!-- Beneficios -->
+            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="font-semibold text-slate-800 mb-2">Beneficios y ventajas</p>
+              <div class="h-44 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3">
+                <ul id="benList" class="space-y-2 text-sm text-slate-700">
+                  <li>Salario competitivo acorde al mercado</li>
+                  <li>Seguro de gastos médicos mayores</li>
+                  <li>Horario flexible y opción de trabajo remoto</li>
+                  <li>Oportunidades de crecimiento profesional</li>
+                </ul>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <input id="benInput" type="text" placeholder="Escribe un nuevo beneficio…"
+                       class="flex-1 rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+                <button type="button" id="btnAddBen" class="px-3 py-2 rounded-lg bg-fortia-primary text-white text-sm hover:opacity-95">Agregar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="font-semibold text-slate-800 mb-2">Habilidades técnicas</p>
+              <div class="h-32 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3">
+                <ul id="habList" class="space-y-2 text-sm text-slate-700">
+                  <li>JavaScript</li>
+                  <li>HTML/CSS</li>
+                  <li>Git</li>
+                </ul>
+              </div>
+              <div class="mt-3 flex gap-2">
+                <input id="habInput" type="text" placeholder="Agrega una habilidad…"
+                       class="flex-1 rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100">
+                <button type="button" id="btnAddHab" class="px-3 py-2 rounded-lg bg-fortia-primary text-white text-sm hover:opacity-95">Agregar</button>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-4">
+              <p class="font-semibold text-slate-800 mb-2">Información adicional</p>
+              <textarea id="infoExtra" rows="6" class="w-full rounded-lg border-slate-300 focus:border-fortia-primary focus:ring focus:ring-blue-100 placeholder:text-slate-400" placeholder="Cualquier información adicional relevante para el candidato…"></textarea>
+            </div>
+          </div>
+        </form>
+
+        <!-- Paso 4 (maqueta estática) -->
+        <section id="step-4" class="step-pane hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-card p-5">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center text-[11px] font-semibold px-2 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200">Media Prioridad</span>
+            </div>
+
+            <h3 id="preview-title" class="mt-2 text-xl font-semibold text-slate-900">Desarrollador Frontend Senior</h3>
+
+            <div class="mt-2 flex flex-wrap items-center text-sm text-slate-600 gap-x-2 gap-y-1">
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7V6a2 2 0 012-2h2a2 2 0 012 2v1m-9 0h10m-12 4h14m-14 0v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg>
+                Desarrollo de Software
+              </span>
+              <span class="text-slate-300">•</span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1114 0z"/></svg>
+                Ciudad de México / Remoto
+              </span>
+              <span class="text-slate-300">•</span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Tiempo completo
+              </span>
+              <span class="text-slate-300">•</span>
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v4m0 10v4m7-7h4M1 12h4m11.314-6.314l2.829 2.829M4.857 19.142l2.829-2.828m0-8.486L4.857 4.857m13.286 13.285l-2.829-2.828"/></svg>
+                3–5 años
+              </span>
+            </div>
+
+            <p id="preview-salary" class="mt-3 font-semibold text-emerald-600">$45000 – $65000 MXN</p>
+            <div class="mt-3 h-px bg-slate-200"></div>
+
+            <div class="mt-4">
+              <div class="flex items-center gap-2 text-fortia-primary font-semibold">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h6M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>Descripción del Puesto</span>
+              </div>
+              <p id="preview-desc" class="mt-2 text-sm text-slate-700">
+                Buscamos un desarrollador frontend senior con experiencia en React y tecnologías modernas para unirse a nuestro
+                equipo de desarrollo. Trabajarás creando interfaces limpias, accesibles y de alto rendimiento, colaborando con
+                producto y diseño para entregar valor continuo.
+              </p>
+            </div>
+
+            <div class="mt-6">
+              <div class="flex items-center gap-2 text-fortia-primary font-semibold">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 7h.01M7 12h.01M7 17h.01M4 6h10M4 11h10M4 16h10"/></svg>
+                <span>Requisitos del Puesto</span>
+              </div>
+
+              <ul id="preview-reqs" class="mt-2 divide-y divide-emerald-100 rounded-lg border border-emerald-100 bg-emerald-50/30">
+                <li class="flex items-start gap-2 p-2">
+                  <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full border border-emerald-300 bg-emerald-100 text-emerald-700">✓</span>
+                  <span class="text-sm text-slate-700">Experiencia con React y JavaScript ES6+</span>
+                </li>
+                <li class="flex items-start gap-2 p-2">
+                  <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full border border-emerald-300 bg-emerald-100 text-emerald-700">✓</span>
+                  <span class="text-sm text-slate-700">Conocimiento de HTML5, CSS3 y responsive design</span>
+                </li>
+                <li class="flex items-start gap-2 p-2">
+                  <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full border border-emerald-300 bg-emerald-100 text-emerald-700">✓</span>
+                  <span class="text-sm text-slate-700">Experiencia con Git y metodologías ágiles</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer buttons -->
+      <div class="px-6 py-4 bg-slate-50 rounded-b-2xl border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <a href="../MainLayout.html" class="px-3 py-2 text-slate-600 hover:text-slate-800 text-sm rounded-lg border border-slate-200 bg-white">✖ Cancelar</a>
+          <button type="button" id="btnDraft" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 text-sm">
+            <span>💾</span> Guardar Borrador
+          </button>
+        </div>
+        <div class="flex items-center gap-3">
+          <button type="button" id="btnPrev" class="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 bg-white disabled:opacity-50">← Anterior</button>
+          <button type="button" id="btnNext" class="px-4 py-2 rounded-lg bg-fortia-primary text-white hover:opacity-95">Continuar →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Script núcleo del wizard (restaura navegación) ===== -->
+  <script>
+    // ---- Wizard core ----
+    const panes = ['step-1','step-2','step-3','step-4'].map(id => document.getElementById(id));
+    const stepDots = document.querySelectorAll('.step-item');
+    let current = 0;
+
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+
+    function renderSteps(){
+      panes.forEach((p,i)=>p.classList.toggle('hidden', i!==current));
+
+      stepDots.forEach((li,i)=>{
+        const dot = li.querySelector('.step-dot');
+        if(i < current){
+          li.classList.remove('opacity-60');
+          dot.classList.add('!bg-fortia-primary','!text-white','!border-fortia-primary');
+        }else if(i === current){
+          li.classList.remove('opacity-60');
+          dot.classList.add('!border-fortia-primary','!text-fortia-primary');
+          dot.classList.remove('!bg-fortia-primary','!text-white');
+        }else{
+          li.classList.add('opacity-60');
+          dot.classList.remove('!bg-fortia-primary','!text-white','!border-fortia-primary','!text-fortia-primary');
+        }
+      });
+
+      btnPrev.disabled = current===0;
+      btnNext.textContent = current===panes.length-1 ? 'Publicar' : 'Continuar →';
+    }
+
+    function validateStep1(){
+      const titulo = document.getElementById('titulo').value.trim();
+      const depto  = document.getElementById('departamento').value;
+      const just   = document.getElementById('justificacion').value.trim();
+      const ok = titulo.length>0 && depto && just.length>=20;
+      if(!ok) alert('Completa: Título, Departamento y Justificación (mínimo 20 caracteres).');
+      return ok;
+    }
+
+    btnPrev.addEventListener('click', ()=>{ if(current>0){ current--; renderSteps(); }});
+    btnNext.addEventListener('click', ()=>{
+      if(current===0 && !validateStep1()) return;
+      if(current < panes.length - 1){ current++; renderSteps(); }
+      else { alert('✅ Vacante publicada (demo).'); }
+    });
+
+    // prioridad (segmented)
+    const seg = document.getElementById('prioridad');
+    if (seg) seg.querySelectorAll('.seg-btn').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        seg.querySelectorAll('.seg-btn').forEach(x=>x.className='seg-btn px-6 py-3 text-center font-semibold bg-white text-slate-700 border-x first:border-0 last:border-0 border-slate-200');
+        b.className='seg-btn px-6 py-3 text-center font-semibold bg-rose-50 text-rose-700';
+      });
+    });
+
+    // contador de caracteres
+    const just = document.getElementById('justificacion');
+    const counter = document.getElementById('charCount');
+    if (just && counter){
+      just.addEventListener('input', ()=> counter.textContent = just.value.trim().length);
+    }
+
+    // botón IA (demo)
+    document.getElementById('btnIA')?.addEventListener('click', ()=>{
+      just.value = 'El puesto resolverá cuellos de botella en la entrega de producto y permitirá acelerar el roadmap. Es una posición nueva enfocada en mejorar la calidad y la velocidad del desarrollo.';
+      counter.textContent = just.value.length;
+      const hint = document.getElementById('iaHint'); hint?.classList.remove('hidden');
+      setTimeout(()=>hint?.classList.add('hidden'),2500);
+    });
+
+    // inicio
+    renderSteps();
+  </script>
+
+  <!-- ===== Extras (pasos 2 y 3) – SIN sobreescribir renderSteps ===== -->
+  <script>
+    (function(){
+      const $ = (id)=>document.getElementById(id);
+
+      // Paso 2 - descripción / contador
+      const desc = $('descPuesto');
+      const descCount = $('descCount');
+      $('btnGenDesc')?.addEventListener('click', ()=>{
+        if(!desc) return;
+        desc.value =
+          `• Colaborar con equipos multidisciplinarios para diseñar y desarrollar nuevas funcionalidades.\n`+
+          `• Escribir código limpio, mantenible y probado.\n`+
+          `• Participar en revisiones de código y mejora continua.\n`+
+          `• Contribuir a arquitectura y buenas prácticas.`;
+        desc.dispatchEvent(new Event('input'));
+      });
+      desc?.addEventListener('input', ()=> descCount && (descCount.textContent = desc.value.trim().length));
+
+      // Paso 2 - salario
+      const chk = $('chkMostrarSalario'), min = $('salMin'), max = $('salMax'), mon = $('moneda');
+      function toggleSalary(on){
+        [min,max,mon].forEach(el=>{
+          if(!el) return;
+          el.disabled = !on;
+          if(!on) el.value = '';
+        });
+      }
+      chk?.addEventListener('change', e=>toggleSalary(e.target.checked));
+      toggleSalary(false);
+
+      // Paso 3 - listas dinámicas
+      function addItem(inputId, listId){
+        const inp=$(inputId), list=$(listId);
+        if(!inp || !list) return;
+        const txt = inp.value.trim(); if(!txt) return;
+        const li=document.createElement('li');
+        li.className='group flex items-start gap-2';
+        li.innerHTML=`<span class="mt-1">•</span><span class="flex-1 text-sm text-slate-700">${txt}</span>
+                      <button type="button" class="text-slate-300 hover:text-rose-500 hidden group-hover:block">✕</button>`;
+        li.querySelector('button').addEventListener('click',()=>li.remove());
+        list.appendChild(li); inp.value='';
+      }
+      $('btnAddReq')?.addEventListener('click',()=>addItem('reqInput','reqList'));
+      $('btnAddBen')?.addEventListener('click',()=>addItem('benInput','benList'));
+      $('btnAddHab')?.addEventListener('click',()=>addItem('habInput','habList'));
+      ['reqInput','benInput','habInput'].forEach(id=>{
+        $(id)?.addEventListener('keydown',e=>{
+          if(e.key==='Enter'){ e.preventDefault(); const map={reqInput:'reqList',benInput:'benList',habInput:'habList'}; addItem(id,map[id]); }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

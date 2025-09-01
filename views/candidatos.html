@@ -1,0 +1,236 @@
+<!-- Candidatos Content -->
+<main class="p-6">
+  <div class="mb-6">
+    <div class="flex items-center gap-2 mb-2">
+      <h1 class="text-2xl font-bold text-slate-800 dark:text-slate-200">Candidatos</h1>
+      <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs rounded-full font-medium">NEW</span>
+    </div>
+    <p class="text-slate-600 dark:text-slate-400">Gestiona y evalúa a todos los candidatos de tu organización</p>
+  </div>
+
+  <!-- Filtros y acciones -->
+  <div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl shadow-card p-4 mb-6">
+    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+      <div class="flex flex-col md:flex-row gap-4 flex-1">
+        <div class="relative">
+          <input type="search" placeholder="Buscar candidatos..." 
+                 class="w-full md:w-80 rounded border border-gray-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100"/>
+          <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+        </div>
+        <select class="rounded border border-gray-200 px-3 py-2 text-sm focus:border-fortia-primary">
+          <option>Todas las vacantes</option>
+          <option>Frontend Developer</option>
+          <option>UX Designer</option>
+          <option>DevOps Engineer</option>
+          <option>Data Analyst</option>
+        </select>
+        <select class="rounded border border-gray-200 px-3 py-2 text-sm focus:border-fortia-primary">
+          <option>Todos los estados</option>
+          <option>Nuevo</option>
+          <option>En revisión</option>
+          <option>Entrevista</option>
+          <option>Oferta</option>
+          <option>Contratado</option>
+          <option>Rechazado</option>
+        </select>
+      </div>
+      <div class="flex gap-2">
+        <button class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors">
+          📊 Exportar
+        </button>
+        <button class="bg-fortia-primary text-white px-4 py-2 rounded-lg hover:bg-fortia-primary/90 transition-colors">
+          ➕ Agregar Candidato
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de candidatos -->
+  <div class="bg-white rounded-xl shadow-card overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-slate-50 border-b border-slate-200">
+          <tr>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Candidato</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Vacante</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Estado</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Match</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Aplicó</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+          <!-- Candidato 1 -->
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  MG
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800">María García</p>
+                  <p class="text-sm text-slate-500">maria.garcia@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800">Frontend Developer</p>
+              <p class="text-sm text-slate-500">Tecnología</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">En revisión</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 rounded-full h-2">
+                  <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                </div>
+                <span class="text-sm font-medium text-green-600">92%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600">hace 5 min</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Programar entrevista">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3h8v4M5 21h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Rechazar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 2 -->
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  CM
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800">Carlos Mendoza</p>
+                  <p class="text-sm text-slate-500">carlos.mendoza@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800">Frontend Developer</p>
+              <p class="text-sm text-slate-500">Tecnología</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Entrevista</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 rounded-full h-2">
+                  <div class="bg-green-500 h-2 rounded-full" style="width: 88%"></div>
+                </div>
+                <span class="text-sm font-medium text-green-600">88%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600">hace 1 hora</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver entrevista">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Rechazar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 3 -->
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  AL
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800">Ana López</p>
+                  <p class="text-sm text-slate-500">ana.lopez@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800">UX Designer</p>
+              <p class="text-sm text-slate-500">Diseño</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Contratado</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 rounded-full h-2">
+                  <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                </div>
+                <span class="text-sm font-medium text-green-600">95%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600">hace 2 horas</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver contrato">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <div class="mt-6 flex items-center justify-between">
+    <p class="text-sm text-slate-600">Mostrando 1-3 de 23 candidatos</p>
+    <div class="flex items-center gap-2">
+      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">
+        ← Anterior
+      </button>
+      <button class="px-3 py-2 bg-fortia-primary text-white rounded text-sm">1</button>
+      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">2</button>
+      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">3</button>
+      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">
+        Siguiente →
+      </button>
+    </div>
+  </div>
+</main>
