@@ -401,53 +401,199 @@
 </main>
 
 <script>
-  // Inicializar filtros de vacantes cuando se carga esta vista
-  (function () {
-    let initAttempts = 0;
-    const maxAttempts = 50;
+// Filtros simples para vacantes
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    console.log('Iniciando filtros de vacantes...');
+    
+    // Elementos
+    const tbody = document.getElementById('jobsTbody');
+    const noRow = document.getElementById('noResultsRow');
+    const searchInput = document.getElementById('fltSearch');
+    const stateSelect = document.getElementById('fltState');
+    const deptSelect = document.getElementById('fltDept');
+    const recruiterSelect = document.getElementById('fltRecruiter');
+    const sortSelect = document.getElementById('fltSort');
+    
+    if (!tbody) {
+      console.error('No se encontró jobsTbody');
+      return;
+    }
+    
+    console.log('Elementos encontrados:', {
+      tbody: !!tbody,
+      searchInput: !!searchInput,
+      stateSelect: !!stateSelect,
+      deptSelect: !!deptSelect,
+      recruiterSelect: !!recruiterSelect,
+      sortSelect: !!sortSelect
+    });
 
-    function initFilters() {
-      initAttempts++;
-      
-      // Verificar que los elementos necesarios existan
-      const tbody = document.getElementById('jobsTbody');
-      const searchInput = document.getElementById('fltSearch');
-      
-      if (!tbody || !searchInput) {
-        if (initAttempts < maxAttempts) {
-          setTimeout(initFilters, 100);
-        } else {
-          console.warn('No se pudieron encontrar los elementos necesarios para los filtros de vacantes');
-        }
-        return;
-      }
-
-      // Verificar si el script de VacantesManager está disponible
-      if (typeof window.initVacantesManager === 'function') {
-        console.log('Inicializando filtros de vacantes...');
-        window.initVacantesManager();
-      } else if (typeof window.VacantesManager === 'function') {
-        // Inicializar directamente si la clase está disponible
-        console.log('Inicializando VacantesManager directamente...');
-        if (!window.vacantesManager) {
-          window.vacantesManager = new window.VacantesManager();
-          window.vacantesManager.init();
-        }
-      } else {
-        // Si no está disponible, intentar de nuevo
-        if (initAttempts < maxAttempts) {
-          setTimeout(initFilters, 200);
-        } else {
-          console.warn('VacantesManager no está disponible después de múltiples intentos');
-        }
-      }
+    function removeAccents(str) {
+      return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     }
 
-    // Ejecutar cuando el contenido esté listo
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => setTimeout(initFilters, 100));
-    } else {
-      setTimeout(initFilters, 100);
+    function filterJobs() {
+      console.log('Aplicando filtros de vacantes...');
+      
+      const searchTerm = removeAccents(searchInput ? searchInput.value : '');
+      const stateFilter = stateSelect ? stateSelect.value : '';
+      const deptFilter = deptSelect ? deptSelect.value : '';
+      const recruiterFilter = recruiterSelect ? recruiterSelect.value : '';
+      const sortBy = sortSelect ? sortSelect.value : '';
+
+      const allRows = tbody.querySelectorAll('tr[data-position]');
+      const visibleRows = [];
+
+      allRows.forEach(function(row) {
+        let show = true;
+        const data = row.dataset;
+
+        // Filtro de búsqueda
+        if (searchTerm && show) {
+          const searchText = removeAccents(
+            (data.position || '') + ' ' + 
+            (data.department || '') + ' ' + 
+            (data.recruiter || '')
+          );
+          show = searchText.includes(searchTerm);
+        }
+
+        // Filtro por estado
+        if (stateFilter && show) {
+          show = data.state === stateFilter;
+        }
+
+        // Filtro por departamento
+        if (deptFilter && show) {
+          show = data.department === deptFilter;
+        }
+
+        // Filtro por reclutador
+        if (recruiterFilter && show) {
+          show = data.recruiter === recruiterFilter;
+        }
+
+        // Mostrar u ocultar fila
+        if (show) {
+          row.style.display = '';
+          visibleRows.push(row);
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      // Ordenamiento
+      if (sortBy && visibleRows.length > 0) {
+        const stateOrder = {
+          'ACTIVA': 1,
+          'BORRADOR': 2,
+          'PAUSADA': 3,
+          'CERRADA': 4
+        };
+        
+        visibleRows.sort(function(a, b) {
+          const dataA = a.dataset;
+          const dataB = b.dataset;
+          
+          switch (sortBy) {
+            case 'position':
+              return (dataA.position || '').localeCompare(dataB.position || '');
+            case 'department':
+              return (dataA.department || '').localeCompare(dataB.department || '');
+            case 'date':
+              return new Date(dataB.date || 0) - new Date(dataA.date || 0);
+            case 'state':
+              return (stateOrder[dataA.state] || 999) - (stateOrder[dataB.state] || 999);
+            case 'candidates':
+              return Number(dataB.candidates || 0) - Number(dataA.candidates || 0);
+            default:
+              return 0;
+          }
+        });
+
+        visibleRows.forEach(function(row) {
+          tbody.appendChild(row);
+        });
+      }
+
+      // Mostrar mensaje de sin resultados
+      if (noRow) {
+        if (visibleRows.length === 0) {
+          noRow.style.display = '';
+          tbody.appendChild(noRow);
+        } else {
+          noRow.style.display = 'none';
+        }
+      }
+
+      console.log('Filtros de vacantes aplicados. Vacantes visibles:', visibleRows.length);
     }
-  })();
+
+    // Event listeners
+    let debounceTimer;
+    
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(filterJobs, 300);
+      });
+    }
+
+    if (stateSelect) {
+      stateSelect.addEventListener('change', filterJobs);
+    }
+
+    if (deptSelect) {
+      deptSelect.addEventListener('change', filterJobs);
+    }
+
+    if (recruiterSelect) {
+      recruiterSelect.addEventListener('change', filterJobs);
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', filterJobs);
+    }
+
+    // Acciones de botones
+    tbody.addEventListener('click', function(e) {
+      const button = e.target.closest('button');
+      if (!button) return;
+
+      const row = button.closest('tr[data-position]');
+      if (!row) return;
+
+      const position = row.dataset.position || 'Vacante';
+      const action = button.dataset.action;
+
+      switch (action) {
+        case 'view':
+          alert('Ver detalles de: ' + position);
+          break;
+        case 'edit':
+          alert('Editar: ' + position);
+          break;
+        case 'pause':
+          alert('Pausar: ' + position);
+          break;
+        case 'close':
+          if (confirm('¿Cerrar la vacante ' + position + '?')) {
+            alert(position + ' ha sido cerrada');
+          }
+          break;
+        case 'duplicate':
+          alert('Duplicar: ' + position);
+          break;
+        default:
+          console.log('Acción no reconocida:', action);
+      }
+    });
+
+    // Aplicar filtros iniciales
+    filterJobs();
+    console.log('Filtros de vacantes inicializados correctamente');
+    
+  }, 500);
+});
 </script>

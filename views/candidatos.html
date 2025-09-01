@@ -567,164 +567,213 @@
 </main>
 
 <script>
-// Filtros funcionales para candidatos
-(function() {
-  function initCandidatesFilters() {
+// Filtros simples y funcionales para candidatos
+document.addEventListener('DOMContentLoaded', function() {
+  // Esperar un poco más para asegurar que todo esté cargado
+  setTimeout(function() {
+    console.log('Iniciando filtros de candidatos...');
+    
+    // Elementos principales
     const tbody = document.getElementById('candidatesTableBody');
     const noRow = document.getElementById('noResultsRow');
     const counter = document.getElementById('resultsCounter');
+    const searchInput = document.getElementById('candidateSearch');
+    const vacancySelect = document.getElementById('vacancyFilter');
+    const statusSelect = document.getElementById('statusFilter');
+    const sortSelect = document.getElementById('sortFilter');
     
-    if (!tbody || !noRow) {
-      console.warn('Elementos no encontrados');
+    if (!tbody) {
+      console.error('No se encontró candidatesTableBody');
       return;
     }
+    
+    console.log('Elementos encontrados:', {
+      tbody: !!tbody,
+      noRow: !!noRow,
+      searchInput: !!searchInput,
+      vacancySelect: !!vacancySelect,
+      statusSelect: !!statusSelect,
+      sortSelect: !!sortSelect
+    });
 
-    const controls = {
-      search: document.getElementById('candidateSearch'),
-      vacancy: document.getElementById('vacancyFilter'),
-      status: document.getElementById('statusFilter'),
-      sort: document.getElementById('sortFilter'),
-    };
+    // Función para quitar acentos
+    function removeAccents(str) {
+      return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
 
-    const removeAccents = (str) => (str || '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
+    // Función principal de filtrado
+    function filterCandidates() {
+      console.log('Aplicando filtros de candidatos...');
+      
+      const searchTerm = removeAccents(searchInput ? searchInput.value : '');
+      const vacancyFilter = vacancySelect ? vacancySelect.value : '';
+      const statusFilter = statusSelect ? statusSelect.value : '';
+      const sortBy = sortSelect ? sortSelect.value : '';
 
-    const getAllRows = () => [...tbody.querySelectorAll('tr[data-name]')];
+      console.log('Filtros:', { searchTerm, vacancyFilter, statusFilter, sortBy });
 
-    function applyFilters() {
-      const searchTerm = removeAccents(controls.search?.value || '');
-      const vacancyFilter = controls.vacancy?.value || '';
-      const statusFilter = controls.status?.value || '';
-      const sortBy = controls.sort?.value || '';
+      const allRows = tbody.querySelectorAll('tr[data-name]');
+      console.log('Filas encontradas:', allRows.length);
+      
+      const visibleRows = [];
 
-      const allRows = getAllRows();
-      const visible = [];
-
-      // Filtrar filas
-      allRows.forEach(tr => {
-        const data = tr.dataset;
+      // Filtrar cada fila
+      allRows.forEach(function(row, index) {
         let show = true;
+        const data = row.dataset;
+        
+        console.log('Procesando fila', index, ':', {
+          name: data.name,
+          email: data.email,
+          vacancy: data.vacancy,
+          status: data.status
+        });
 
-        // Filtro de búsqueda
-        if (searchTerm) {
-          const searchText = removeAccents(`${data.name} ${data.email}`);
+        // Filtro de búsqueda por nombre y email
+        if (searchTerm && show) {
+          const searchText = removeAccents((data.name || '') + ' ' + (data.email || ''));
           show = searchText.includes(searchTerm);
+          console.log('Búsqueda:', searchText, 'incluye', searchTerm, '=', show);
         }
 
         // Filtro por vacante
-        if (show && vacancyFilter) {
+        if (vacancyFilter && show) {
           show = data.vacancy === vacancyFilter;
+          console.log('Vacante:', data.vacancy, '===', vacancyFilter, '=', show);
         }
 
         // Filtro por estado
-        if (show && statusFilter) {
+        if (statusFilter && show) {
           show = data.status === statusFilter;
+          console.log('Estado:', data.status, '===', statusFilter, '=', show);
         }
 
-        tr.classList.toggle('hidden', !show);
-        if (show) visible.push(tr);
+        // Mostrar u ocultar fila
+        if (show) {
+          row.style.display = '';
+          visibleRows.push(row);
+        } else {
+          row.style.display = 'none';
+        }
       });
 
       // Ordenamiento
-      if (sortBy && visible.length > 0) {
+      if (sortBy && visibleRows.length > 0) {
+        console.log('Ordenando por:', sortBy);
         const statusOrder = {
-          'Nuevo': 1, 'En revisión': 2, 'Entrevista': 3,
-          'Oferta': 4, 'Contratado': 5, 'Rechazado': 6
+          'Nuevo': 1,
+          'En revisión': 2,
+          'Entrevista': 3,
+          'Oferta': 4,
+          'Contratado': 5,
+          'Rechazado': 6
         };
         
-        visible.sort((a, b) => {
-          const da = a.dataset, db = b.dataset;
+        visibleRows.sort(function(a, b) {
+          const dataA = a.dataset;
+          const dataB = b.dataset;
           
           switch (sortBy) {
             case 'name':
-              return da.name.localeCompare(db.name);
+              return (dataA.name || '').localeCompare(dataB.name || '');
             case 'match':
-              return Number(db.match) - Number(da.match);
+              return Number(dataB.match || 0) - Number(dataA.match || 0);
             case 'date':
-              return new Date(db.date) - new Date(da.date);
+              return new Date(dataB.date || 0) - new Date(dataA.date || 0);
             case 'status':
-              return (statusOrder[da.status] || 999) - (statusOrder[db.status] || 999);
+              return (statusOrder[dataA.status] || 999) - (statusOrder[dataB.status] || 999);
             default:
               return 0;
           }
         });
 
-        visible.forEach(tr => tbody.appendChild(tr));
+        // Reordenar en el DOM
+        visibleRows.forEach(function(row) {
+          tbody.appendChild(row);
+        });
       }
 
-      // Mostrar/ocultar mensaje de sin resultados
-      const isEmpty = visible.length === 0;
-      noRow.classList.toggle('hidden', !isEmpty);
-      if (isEmpty) tbody.appendChild(noRow);
+      // Mostrar mensaje de "sin resultados"
+      if (noRow) {
+        if (visibleRows.length === 0) {
+          noRow.style.display = '';
+          tbody.appendChild(noRow);
+        } else {
+          noRow.style.display = 'none';
+        }
+      }
 
       // Actualizar contador
       if (counter) {
-        counter.textContent = `Mostrando ${visible.length} de ${allRows.length} candidatos`;
+        counter.textContent = 'Mostrando ' + visibleRows.length + ' de ' + allRows.length + ' candidatos';
       }
+
+      console.log('Filtros aplicados. Candidatos visibles:', visibleRows.length);
     }
 
     // Event listeners
     let debounceTimer;
-    if (controls.search) {
-      controls.search.addEventListener('input', () => {
+    
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(applyFilters, 300);
+        debounceTimer = setTimeout(filterCandidates, 300);
       });
     }
 
-    ['vacancy', 'status', 'sort'].forEach(key => {
-      if (controls[key]) {
-        controls[key].addEventListener('change', applyFilters);
-      }
-    });
+    if (vacancySelect) {
+      vacancySelect.addEventListener('change', filterCandidates);
+    }
+
+    if (statusSelect) {
+      statusSelect.addEventListener('change', filterCandidates);
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', filterCandidates);
+    }
 
     // Acciones de botones
-    tbody.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
+    tbody.addEventListener('click', function(e) {
+      const button = e.target.closest('button');
+      if (!button) return;
 
-      const tr = btn.closest('tr[data-name]');
-      if (!tr) return;
+      const row = button.closest('tr[data-name]');
+      if (!row) return;
 
-      const name = tr.dataset.name;
-      const action = btn.dataset.action;
+      const candidateName = row.dataset.name || 'Candidato';
+      const action = button.dataset.action;
 
       switch (action) {
         case 'view':
-          alert(`Ver perfil de: ${name}`);
+          alert('Ver perfil de: ' + candidateName);
           break;
         case 'interview':
-          alert(`Programar entrevista con: ${name}`);
+          alert('Programar entrevista con: ' + candidateName);
           break;
         case 'reject':
-          if (confirm(`¿Rechazar a ${name}?`)) {
-            alert(`${name} rechazado`);
+          if (confirm('¿Estás seguro de rechazar a ' + candidateName + '?')) {
+            alert(candidateName + ' ha sido rechazado');
           }
           break;
         case 'contract':
-          alert(`Ver contrato de: ${name}`);
+          alert('Ver contrato de: ' + candidateName);
           break;
         case 'offer':
-          alert(`Ver oferta para: ${name}`);
+          alert('Ver oferta para: ' + candidateName);
           break;
         case 'feedback':
-          alert(`Ver feedback de: ${name}`);
+          alert('Ver feedback de: ' + candidateName);
           break;
+        default:
+          console.log('Acción no reconocida:', action);
       }
     });
 
     // Aplicar filtros iniciales
-    applyFilters();
+    filterCandidates();
     console.log('Filtros de candidatos inicializados correctamente');
-  }
-
-  // Ejecutar cuando esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(initCandidatesFilters, 100));
-  } else {
-    setTimeout(initCandidatesFilters, 100);
-  }
-})();
+    
+  }, 500); // Esperar 500ms para asegurar que todo esté cargado
+});
 </script>
