@@ -1,80 +1,129 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Gestión de Vacantes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
-          colors: { fortia: { primary: '#004176' } },
-          boxShadow:{ card:'0 2px 10px rgba(16,24,40,.06)' }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-[#F5F9FF] text-slate-800">
-
-<!-- Vacantes Content (nuevo) -->
+<!-- Vacantes Content -->
 <main class="p-6">
-  <!-- Header + CTA -->
-  <div class="mb-6 flex items-center justify-between">
-    <div>
-      <h1 class="text-2xl font-bold text-slate-800">Gestión de Vacantes</h1>
-      <p class="text-slate-600 mt-1">Administra todas las posiciones abiertas en tu organización</p>
+  <!-- ===== Encabezado + Acciones ===== -->
+  <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">📄</span>
+      <h1 class="text-2xl font-bold text-slate-900">
+        Gestión de Vacantes
+        </span>
+      </h1>
     </div>
-    <button id="btnNueva" class="bg-fortia-primary text-white px-4 py-2 rounded-lg hover:bg-fortia-primary/90 transition">
-      ➕ Nueva Vacante
-    </button>
+
+    <div class="flex items-center gap-2">
+      <button
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+        <span>📊</span> Reportes
+      </button>
+      <button
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+        <span>⚙️</span> Configurar
+      </button>
+      <a id="nuevaVacanteBtn" href="pages/nueva-vacante.html"
+        class="hidden md:flex items-center gap-2 bg-fortia-primary text-white px-3 py-2 rounded hover:bg-fortia-primary/90 transition-colors">
+        <span class="text-base leading-none">＋</span> Nueva Vacante
+      </a>
+    </div>
   </div>
 
-  <!-- KPIs -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white border border-slate-200 rounded-xl shadow-card p-4 flex items-center gap-3">
-      <span class="grid h-10 w-10 place-items-center rounded-lg bg-blue-50 text-fortia-primary">📦</span>
-      <div>
-        <p class="text-xs text-slate-500">VACANTES ACTIVAS</p>
-        <p class="text-xl font-semibold text-slate-800">4</p>
-      </div>
+  <!-- ===== Cinta de Insights Inteligentes ===== -->
+  <div
+    class="mb-6 rounded-2xl border border-white/10 bg-gradient-to-r from-[#5B5FEA] via-[#6D45D4] to-[#8B3AA6] p-4 md:p-5">
+    <!-- título -->
+    <div class="mb-3 flex items-center gap-2 text-white/90">
+      <span class="grid h-7 w-7 place-items-center rounded-lg bg-white/15 text-lg">🤖</span>
+      <p class="text-base font-semibold tracking-tight">Insights Inteligentes</p>
     </div>
-    <div class="bg-white border border-slate-200 rounded-xl shadow-card p-4 flex items-center gap-3">
-      <span class="grid h-10 w-10 place-items-center rounded-lg bg-emerald-50 text-emerald-600">👥</span>
-      <div>
-        <p class="text-xs text-slate-500">APLICACIONES</p>
-        <p class="text-xl font-semibold text-slate-800">192</p>
+
+    <!-- tarjetas -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <!-- Rendimiento -->
+      <div
+        class="rounded-xl border border-white/15 bg-white/10 p-4 text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
+        <p class="mb-1 flex items-center gap-2 text-sm font-semibold">
+          <span>🧪</span> Rendimiento Destacado
+        </p>
+        <p class="text-sm leading-relaxed text-white/85">
+          “Senior React Developer” tiene 85% más aplicaciones que el promedio. Considera duplicar la estrategia de
+          publicación.
+        </p>
       </div>
-    </div>
-    <div class="bg-white border border-slate-200 rounded-xl shadow-card p-4 flex items-center gap-3">
-      <span class="grid h-10 w-10 place-items-center rounded-lg bg-amber-50 text-amber-600">⏱️</span>
-      <div>
-        <p class="text-xs text-slate-500">DÍAS PROMEDIO</p>
-        <p class="text-xl font-semibold text-slate-800">12</p>
+
+      <!-- Acción recomendada -->
+      <div
+        class="rounded-xl border border-white/15 bg-white/10 p-4 text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
+        <p class="mb-1 flex items-center gap-2 text-sm font-semibold">
+          <span>⚡</span> Acción Recomendada
+        </p>
+        <p class="text-sm leading-relaxed text-white/85">
+          3 vacantes requieren atención: baja tasa de conversión. La IA sugiere ajustar descripción y keywords.
+        </p>
       </div>
-    </div>
-    <div class="bg-white border border-slate-200 rounded-xl shadow-card p-4 flex items-center gap-3">
-      <span class="grid h-10 w-10 place-items-center rounded-lg bg-violet-50 text-violet-600">📈</span>
-      <div>
-        <p class="text-xs text-slate-500">TASA ÉXITO</p>
-        <p class="text-xl font-semibold text-slate-800">68%</p>
+
+      <!-- Optimización -->
+      <div
+        class="rounded-xl border border-white/15 bg-white/10 p-4 text-white/90 shadow-[inset_0_1px_0_rgba(255,255,255,.08)]">
+        <p class="mb-1 flex items-center gap-2 text-sm font-semibold">
+          <span>🎯</span> Optimización
+        </p>
+        <p class="text-sm leading-relaxed text-white/85">
+          Mejor momento para publicar: Martes 10:00 AM. Programar siguiente vacante aumentará visibilidad 40%.
+        </p>
       </div>
     </div>
   </div>
+
+  <!-- ===== KPIs ===== -->
+  <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <!-- KPI 1 -->
+    <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-card">
+      <span class="grid h-12 w-12 place-items-center rounded-xl bg-blue-50 text-blue-700 text-xl">📦</span>
+      <div>
+        <p class="text-[11px] font-semibold tracking-wide text-slate-400">VACANTES ACTIVAS</p>
+        <p class="text-xl font-semibold text-slate-900">4</p>
+      </div>
+    </div>
+
+    <!-- KPI 2 -->
+    <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-card">
+      <span class="grid h-12 w-12 place-items-center rounded-xl bg-emerald-50 text-emerald-600 text-xl">👥</span>
+      <div>
+        <p class="text-[11px] font-semibold tracking-wide text-slate-400">APLICACIONES</p>
+        <p class="text-xl font-semibold text-slate-900">192</p>
+      </div>
+    </div>
+
+    <!-- KPI 3 -->
+    <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-card">
+      <span class="grid h-12 w-12 place-items-center rounded-xl bg-amber-50 text-amber-600 text-xl">⏱️</span>
+      <div>
+        <p class="text-[11px] font-semibold tracking-wide text-slate-400">DÍAS PROMEDIO</p>
+        <p class="text-xl font-semibold text-slate-900">12</p>
+      </div>
+    </div>
+
+    <!-- KPI 4 -->
+    <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-card">
+      <span class="grid h-12 w-12 place-items-center rounded-xl bg-violet-50 text-violet-600 text-xl">📈</span>
+      <div>
+        <p class="text-[11px] font-semibold tracking-wide text-slate-400">TASA ÉXITO</p>
+        <p class="text-xl font-semibold text-slate-900">68%</p>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Filtros -->
-  <div class="bg-white border border-slate-200 rounded-xl shadow-card p-4 mb-4">
+  <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card p-4 mb-4">
     <div class="flex flex-col lg:flex-row gap-3 items-center">
       <div class="relative flex-1 w-full">
         <input id="fltSearch" type="search" placeholder="Buscar por posición, departamento o reclutador…"
-          class="w-full rounded-lg border border-slate-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100">
-        <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+          class="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100 dark:focus:ring-blue-900">
+        <span class="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">🔍</span>
       </div>
 
-      <select id="fltState" class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <select id="fltState"
+        class="rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm">
         <option value="">Todos los estados</option>
         <option value="ACTIVA">Activa</option>
         <option value="BORRADOR">En borrador</option>
@@ -82,7 +131,8 @@
         <option value="CERRADA">Cerrada</option>
       </select>
 
-      <select id="fltDept" class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <select id="fltDept"
+        class="rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm">
         <option value="">Todos los departamentos</option>
         <option value="Tecnología">Tecnología</option>
         <option value="Diseño">Diseño</option>
@@ -91,7 +141,8 @@
         <option value="Marketing">Marketing</option>
       </select>
 
-      <select id="fltRecruiter" class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <select id="fltRecruiter"
+        class="rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm">
         <option value="">Todos los reclutadores</option>
         <option value="Ana García">Ana García</option>
         <option value="Carlos López">Carlos López</option>
@@ -99,14 +150,16 @@
         <option value="Luis Martín">Luis Martín</option>
       </select>
 
-      <select id="fltSort" class="rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <select id="fltSort"
+        class="rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm">
         <option value="">Ordenar por</option>
         <option value="fecha">Fecha (recientes)</option>
         <option value="apps">Aplicaciones</option>
         <option value="estado">Estado</option>
       </select>
 
-      <button class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm hover:bg-slate-50">
+      <button
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">
         <span>⚙️</span> Más filtros
       </button>
     </div>
@@ -118,16 +171,20 @@
     <div class="xl:col-span-9">
       <!-- Tabs -->
       <div class="mb-3 flex items-center gap-2">
-        <button data-tab="lista" class="tab-btn px-3 py-1.5 rounded-lg text-sm bg-fortia-primary text-white">Lista</button>
-        <button data-tab="kanban" class="tab-btn px-3 py-1.5 rounded-lg text-sm border border-slate-200 text-slate-700 hover:bg-slate-50">Kanban</button>
-        <button data-tab="analytics" class="tab-btn px-3 py-1.5 rounded-lg text-sm border border-slate-200 text-slate-700 hover:bg-slate-50">Analytics</button>
+        <button data-tab="lista"
+          class="tab-btn px-3 py-1.5 rounded-lg text-sm bg-fortia-primary text-white">Lista</button>
+        <button data-tab="kanban"
+          class="tab-btn px-3 py-1.5 rounded-lg text-sm border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Kanban</button>
+        <button data-tab="analytics"
+          class="tab-btn px-3 py-1.5 rounded-lg text-sm border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Analytics</button>
       </div>
 
       <!-- Tabla LISTA -->
-      <div id="tab-lista" class="bg-white border border-slate-200 rounded-xl shadow-card overflow-hidden">
+      <div id="tab-lista"
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card overflow-hidden">
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm">
-            <thead class="bg-slate-50 text-slate-600">
+            <thead class="bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
               <tr>
                 <th class="text-left px-4 py-3">Posición</th>
                 <th class="text-left px-4 py-3">Departamento</th>
@@ -139,90 +196,135 @@
                 <th class="text-left px-4 py-3">Acciones</th>
               </tr>
             </thead>
-            <tbody id="jobsTbody" class="divide-y divide-slate-100">
+            <tbody id="jobsTbody" class="divide-y divide-slate-100 dark:divide-slate-700">
               <!-- Row 1 -->
-              <tr class="hover:bg-slate-50/60" data-position="Senior React Developer" data-dept="Tecnología" data-state="ACTIVA" data-apps="87" data-recruiter="Ana García" data-published-days="5">
-                <td class="px-4 py-3"><div class="font-medium text-slate-800">Senior React Developer</div></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-slate-100 text-slate-700">Tecnología</span></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-emerald-100 text-emerald-700">ACTIVA</span></td>
-                <td class="px-4 py-3">87</td>
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/60" data-position="Senior React Developer"
+                data-dept="Tecnología" data-state="ACTIVA" data-apps="87" data-recruiter="Ana García"
+                data-published-days="5">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-slate-800 dark:text-slate-200">Senior React Developer</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Tecnología</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">ACTIVA</span>
+                </td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">87</td>
                 <td class="px-4 py-3 w-40">
-                  <div class="h-2 w-full rounded bg-slate-100">
-                    <div class="h-2 rounded bg-fortia-primary" style="width:45%"></div>
+                  <div class="h-2 w-full rounded bg-slate-100 dark:bg-slate-700">
+                    <div class="h-2 rounded bg-fortia-primary dark:bg-blue-500" style="width:45%"></div>
                   </div>
                 </td>
-                <td class="px-4 py-3">Ana García</td>
-                <td class="px-4 py-3 text-slate-500">Hace 5 días</td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">Ana García</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">Hace 5 días</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center gap-2">
-                    <button data-action="view-candidates" class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs">Ver Candidatos</button>
-                    <button data-action="edit-job" class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs">Editar</button>
+                    <button data-action="view-candidates"
+                      class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs hover:bg-blue-100 dark:hover:bg-blue-800">Ver
+                      Candidatos</button>
+                    <button data-action="edit-job"
+                      class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-200 dark:hover:bg-slate-600">Editar</button>
                   </div>
                 </td>
               </tr>
 
               <!-- Row 2 -->
-              <tr class="hover:bg-slate-50/60" data-position="Product Manager" data-dept="Producto" data-state="ACTIVA" data-apps="43" data-recruiter="Carlos López" data-published-days="3">
-                <td class="px-4 py-3"><div class="font-medium text-slate-800">Product Manager</div></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-slate-100 text-slate-700">Producto</span></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-emerald-100 text-emerald-700">ACTIVA</span></td>
-                <td class="px-4 py-3">43</td>
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/60" data-position="Product Manager"
+                data-dept="Producto" data-state="ACTIVA" data-apps="43" data-recruiter="Carlos López"
+                data-published-days="3">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-slate-800 dark:text-slate-200">Product Manager</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Producto</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300">ACTIVA</span>
+                </td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">43</td>
                 <td class="px-4 py-3 w-40">
-                  <div class="h-2 w-full rounded bg-slate-100">
-                    <div class="h-2 rounded bg-fortia-primary" style="width:30%"></div>
+                  <div class="h-2 w-full rounded bg-slate-100 dark:bg-slate-700">
+                    <div class="h-2 rounded bg-fortia-primary dark:bg-blue-500" style="width:30%"></div>
                   </div>
                 </td>
-                <td class="px-4 py-3">Carlos López</td>
-                <td class="px-4 py-3 text-slate-500">Hace 3 días</td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">Carlos López</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">Hace 3 días</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center gap-2">
-                    <button data-action="view-candidates" class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs">Ver Candidatos</button>
-                    <button data-action="edit-job" class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs">Editar</button>
+                    <button data-action="view-candidates"
+                      class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs hover:bg-blue-100 dark:hover:bg-blue-800">Ver
+                      Candidatos</button>
+                    <button data-action="edit-job"
+                      class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-200 dark:hover:bg-slate-600">Editar</button>
                   </div>
                 </td>
               </tr>
 
               <!-- Row 3 -->
-              <tr class="hover:bg-slate-50/60" data-position="UX/UI Designer" data-dept="Diseño" data-state="BORRADOR" data-apps="0" data-recruiter="María Rodríguez" data-published-days="9999">
-                <td class="px-4 py-3"><div class="font-medium text-slate-800">UX/UI Designer</div></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-slate-100 text-slate-700">Diseño</span></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-amber-100 text-amber-700">BORRADOR</span></td>
-                <td class="px-4 py-3">0</td>
-                <td class="px-4 py-3 w-40 text-slate-400 italic">Sin pipeline</td>
-                <td class="px-4 py-3">María Rodríguez</td>
-                <td class="px-4 py-3 text-slate-500">Sin publicar</td>
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/60" data-position="UX/UI Designer"
+                data-dept="Diseño" data-state="BORRADOR" data-apps="0" data-recruiter="María Rodríguez"
+                data-published-days="9999">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-slate-800 dark:text-slate-200">UX/UI Designer</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Diseño</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300">BORRADOR</span>
+                </td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">0</td>
+                <td class="px-4 py-3 w-40 text-slate-400 dark:text-slate-500 italic">Sin pipeline</td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">María Rodríguez</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">Sin publicar</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center gap-2">
-                    <button data-action="view-candidates" class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs">Ver Candidatos</button>
-                    <button data-action="edit-job" class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs">Editar</button>
+                    <button data-action="view-candidates"
+                      class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs hover:bg-blue-100 dark:hover:bg-blue-800">Ver
+                      Candidatos</button>
+                    <button data-action="edit-job"
+                      class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-200 dark:hover:bg-slate-600">Editar</button>
                   </div>
                 </td>
               </tr>
 
               <!-- Row 4 -->
-              <tr class="hover:bg-slate-50/60" data-position="DevOps Engineer" data-dept="Tecnología" data-state="PAUSADA" data-apps="62" data-recruiter="Luis Martín" data-published-days="12">
-                <td class="px-4 py-3"><div class="font-medium text-slate-800">DevOps Engineer</div></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-slate-100 text-slate-700">Tecnología</span></td>
-                <td class="px-4 py-3"><span class="text-xs rounded-full px-2 py-1 bg-rose-100 text-rose-700">PAUSADA</span></td>
-                <td class="px-4 py-3">62</td>
+              <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-700/60" data-position="DevOps Engineer"
+                data-dept="Tecnología" data-state="PAUSADA" data-apps="62" data-recruiter="Luis Martín"
+                data-published-days="12">
+                <td class="px-4 py-3">
+                  <div class="font-medium text-slate-800 dark:text-slate-200">DevOps Engineer</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Tecnología</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="text-xs rounded-full px-2 py-1 bg-rose-100 dark:bg-rose-900 text-rose-700 dark:text-rose-300">PAUSADA</span>
+                </td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">62</td>
                 <td class="px-4 py-3 w-40">
-                  <div class="h-2 w-full rounded bg-slate-100">
-                    <div class="h-2 rounded bg-fortia-primary" style="width:52%"></div>
+                  <div class="h-2 w-full rounded bg-slate-100 dark:bg-slate-700">
+                    <div class="h-2 rounded bg-fortia-primary dark:bg-blue-500" style="width:52%"></div>
                   </div>
                 </td>
-                <td class="px-4 py-3">Luis Martín</td>
-                <td class="px-4 py-3 text-slate-500">Hace 12 días</td>
+                <td class="px-4 py-3 text-slate-800 dark:text-slate-200">Luis Martín</td>
+                <td class="px-4 py-3 text-slate-500 dark:text-slate-400">Hace 12 días</td>
                 <td class="px-4 py-3">
                   <div class="flex items-center gap-2">
-                    <button data-action="view-candidates" class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs">Ver Candidatos</button>
-                    <button data-action="edit-job" class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs">Editar</button>
+                    <button data-action="view-candidates"
+                      class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs hover:bg-blue-100 dark:hover:bg-blue-800">Ver
+                      Candidatos</button>
+                    <button data-action="edit-job"
+                      class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs hover:bg-slate-200 dark:hover:bg-slate-600">Editar</button>
                   </div>
                 </td>
               </tr>
 
               <!-- No results -->
               <tr id="noResultsRow" class="hidden">
-                <td colspan="8" class="px-4 py-6 text-center text-slate-500">No se encontraron vacantes con esos filtros.</td>
+                <td colspan="8" class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">No se encontraron
+                  vacantes con esos filtros.</td>
               </tr>
             </tbody>
           </table>
@@ -230,36 +332,49 @@
       </div>
 
       <!-- Kanban (placeholder) -->
-      <div id="tab-kanban" class="hidden bg-white border border-slate-200 rounded-xl shadow-card p-6">
-        <p class="text-slate-600 text-sm">Kanban próximamente…</p>
+      <div id="tab-kanban"
+        class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card p-6">
+        <p class="text-slate-600 dark:text-slate-400 text-sm">Kanban próximamente…</p>
       </div>
 
       <!-- Analytics (placeholder) -->
-      <div id="tab-analytics" class="hidden bg-white border border-slate-200 rounded-xl shadow-card p-6">
-        <p class="text-slate-600 text-sm">Panel de analytics próximamente…</p>
+      <div id="tab-analytics"
+        class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-card p-6">
+        <p class="text-slate-600 dark:text-slate-400 text-sm">Panel de analytics próximamente…</p>
       </div>
     </div>
 
     <!-- Rail derecho: AI Insights -->
     <aside class="xl:col-span-3">
-      <div class="bg-white rounded-xl border border-slate-200 shadow-card p-4 sticky top-6">
+      <div
+        class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-card p-4 sticky top-6">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
-            <span class="grid h-8 w-8 place-items-center rounded-lg bg-fortia-primary/10 text-fortia-primary">🤖</span>
-            <p class="font-medium text-slate-800">AI Insights</p>
+            <span
+              class="grid h-8 w-8 place-items-center rounded-lg bg-fortia-primary/10 dark:bg-blue-900/30 text-fortia-primary dark:text-blue-400">🤖</span>
+            <p class="font-medium text-slate-800 dark:text-slate-200">AI Insights</p>
           </div>
-          <button class="text-sm rounded border border-slate-200 px-2 py-1 hover:bg-slate-50">Actualizar</button>
+          <button
+            class="text-sm rounded border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 px-2 py-1 hover:bg-slate-50 dark:hover:bg-slate-700">Actualizar</button>
         </div>
 
         <ul class="space-y-3 text-sm">
-          <li class="rounded-lg border border-blue-200 bg-blue-50 p-3">
-            <p class="font-medium text-slate-800">Recomendación</p>
-            <p class="text-slate-600 mt-1">La vacante de <span class="font-semibold">Senior React Developer</span> tiene alta demanda.
+          <li class="rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/30 p-3">
+            <p class="font-medium text-slate-800 dark:text-slate-200">Recomendación</p>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">La vacante de <span class="font-semibold">Senior React
+                Developer</span> tiene alta demanda.
               Considera aumentar el salario en un 10% para atraer mejores candidatos.</p>
           </li>
-          <li class="rounded-lg border border-emerald-200 bg-emerald-50 p-3">
-            <p class="font-medium text-slate-800">Tendencia</p>
-            <p class="text-slate-600 mt-1">Las aplicaciones han aumentado un 22% esta semana.</p>
+          <li
+            class="rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/30 p-3">
+            <p class="font-medium text-slate-800 dark:text-slate-200">Tendencia</p>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">Las vacantes de <span
+                class="font-semibold">Tecnología</span> reciben 3x más aplicaciones que otras áreas.</p>
+          </li>
+          <li class="rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/30 p-3">
+            <p class="font-medium text-slate-800 dark:text-slate-200">Alerta</p>
+            <p class="text-slate-600 dark:text-slate-400 mt-1">La vacante <span class="font-semibold">DevOps
+                Engineer</span> está pausada hace 12 días. ¿Reactivar?</p>
           </li>
         </ul>
       </div>
@@ -267,139 +382,72 @@
   </div>
 
   <!-- Paginación -->
-  <div class="mt-6 flex items-center justify-center">
+  <div class="mt-6 flex items-center justify-between">
+    <p class="text-sm text-slate-600 dark:text-slate-400">Mostrando 1-4 de 4 vacantes</p>
     <div class="flex items-center gap-2">
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50">← Anterior</button>
+      <button
+        class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700">←
+        Anterior</button>
       <button class="px-3 py-2 bg-fortia-primary text-white rounded text-sm">1</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50">2</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50">3</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50">Siguiente →</button>
+      <button
+        class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700">2</button>
+      <button
+        class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700">3</button>
+      <button
+        class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Siguiente
+        →</button>
     </div>
   </div>
 </main>
 
-<!-- JS -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  /* ------------ Tabs (lista/kanban/analytics) ------------ */
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('bg-fortia-primary','text-white');
-        b.classList.add('border','border-slate-200','text-slate-700');
-      });
-      btn.classList.add('bg-fortia-primary','text-white');
-      btn.classList.remove('border','border-slate-200','text-slate-700');
-      ['lista','kanban','analytics'].forEach(id => {
-        const pane = document.getElementById('tab-'+id);
-        if (pane) pane.classList.toggle('hidden', id !== target);
-      });
-    });
-  });
+  // Inicializar filtros de vacantes cuando se carga esta vista
+  (function () {
+    let initAttempts = 0;
+    const maxAttempts = 50;
 
-  /* ------------ Filtros de la tabla ------------ */
-  const $ = id => document.getElementById(id);
-  const tbody = $('jobsTbody');
-  const noRow = $('noResultsRow');
-
-  if (!tbody || !noRow) {
-    console.warn('No se encontró tbody o fila vacía');
-    return;
-  }
-
-  const controls = {
-    search: $('fltSearch'),
-    state: $('fltState'),
-    dept: $('fltDept'),
-    recruiter: $('fltRecruiter'),
-    sort: $('fltSort'),
-  };
-
-  const deaccent = s => (s || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-
-  const getRows = () => [...tbody.querySelectorAll('tr[data-position]')];
-
-  function applyFilters() {
-    const term  = deaccent(controls.search?.value);
-    const fState= controls.state?.value || '';
-    const fDept = controls.dept?.value || '';
-    const fRec  = controls.recruiter?.value || '';
-    const sortBy= controls.sort?.value || '';
-
-    const rows = getRows();
-    const visible = [];
-
-    rows.forEach(tr => {
-      const d = tr.dataset;
-      let ok = true;
-
-      if (term) {
-        const hay = deaccent(`${d.position} ${d.dept} ${d.recruiter}`);
-        ok = hay.includes(term);
+    function initFilters() {
+      initAttempts++;
+      
+      // Verificar que los elementos necesarios existan
+      const tbody = document.getElementById('jobsTbody');
+      const searchInput = document.getElementById('fltSearch');
+      
+      if (!tbody || !searchInput) {
+        if (initAttempts < maxAttempts) {
+          setTimeout(initFilters, 100);
+        } else {
+          console.warn('No se pudieron encontrar los elementos necesarios para los filtros de vacantes');
+        }
+        return;
       }
-      if (ok && fState) ok = d.state === fState;
-      if (ok && fDept)  ok = d.dept  === fDept;
-      if (ok && fRec)   ok = d.recruiter === fRec;
 
-      tr.classList.toggle('hidden', !ok);
-      if (ok) visible.push(tr);
-    });
-
-    // Orden
-    if (sortBy) {
-      const peso = { ACTIVA:3, BORRADOR:2, PAUSADA:1, CERRADA:0 };
-      visible.sort((a,b) => {
-        const da=a.dataset, db=b.dataset;
-        if (sortBy==='apps')   return Number(db.apps) - Number(da.apps);                   // desc
-        if (sortBy==='fecha')  return Number(da.publishedDays) - Number(db.publishedDays); // recientes primero
-        if (sortBy==='estado') return (peso[db.state]??-1) - (peso[da.state]??-1);         // ACTIVA>...
-        return 0;
-      });
-      visible.forEach(tr => tbody.appendChild(tr));
+      // Verificar si el script de VacantesManager está disponible
+      if (typeof window.initVacantesManager === 'function') {
+        console.log('Inicializando filtros de vacantes...');
+        window.initVacantesManager();
+      } else if (typeof window.VacantesManager === 'function') {
+        // Inicializar directamente si la clase está disponible
+        console.log('Inicializando VacantesManager directamente...');
+        if (!window.vacantesManager) {
+          window.vacantesManager = new window.VacantesManager();
+          window.vacantesManager.init();
+        }
+      } else {
+        // Si no está disponible, intentar de nuevo
+        if (initAttempts < maxAttempts) {
+          setTimeout(initFilters, 200);
+        } else {
+          console.warn('VacantesManager no está disponible después de múltiples intentos');
+        }
+      }
     }
 
-    // Vacío
-    const empty = visible.length===0;
-    noRow.classList.toggle('hidden', !empty);
-    if (empty) tbody.appendChild(noRow);
-  }
-
-  // Listeners filtros (con debounce en búsqueda)
-  let t;
-  controls.search?.addEventListener('input', () => { clearTimeout(t); t=setTimeout(applyFilters,120); });
-  ['state','dept','recruiter','sort'].forEach(k => controls[k]?.addEventListener('change', applyFilters));
-
-  /* ------------ Acciones de fila (delegación) ------------ */
-  tbody.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-
-    const tr = btn.closest('tr[data-position]');
-    if (!tr) return;
-
-    const puesto = tr.dataset.position || 'Vacante';
-    const label = deaccent(btn.textContent).trim();
-
-    const isView = btn.dataset.action === 'view-candidates' || /^ver( candidatos)?$/.test(label);
-    const isEdit = btn.dataset.action === 'edit-job'        || /^editar$/.test(label);
-
-    if (isView) {
-      alert('Ver candidatos de: ' + puesto);
-      return;
+    // Ejecutar cuando el contenido esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(initFilters, 100));
+    } else {
+      setTimeout(initFilters, 100);
     }
-    if (isEdit) {
-      alert('Editar vacante: ' + puesto);
-      return;
-    }
-  });
-
-  // Init
-  applyFilters();
-});
+  })();
 </script>
-</body>
-</html>

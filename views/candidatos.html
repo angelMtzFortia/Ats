@@ -13,29 +13,39 @@
     <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
       <div class="flex flex-col md:flex-row gap-4 flex-1">
         <div class="relative">
-          <input type="search" placeholder="Buscar candidatos..." 
-                 class="w-full md:w-80 rounded border border-gray-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100"/>
-          <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+          <input id="candidateSearch" type="search" placeholder="Buscar candidatos..." 
+                 class="w-full md:w-80 rounded border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 pl-9 pr-3 py-2 text-sm focus:border-fortia-primary focus:ring focus:ring-blue-100 dark:focus:ring-blue-900"/>
+          <span class="absolute left-3 top-2.5 text-gray-400 dark:text-slate-500">🔍</span>
         </div>
-        <select class="rounded border border-gray-200 px-3 py-2 text-sm focus:border-fortia-primary">
-          <option>Todas las vacantes</option>
-          <option>Frontend Developer</option>
-          <option>UX Designer</option>
-          <option>DevOps Engineer</option>
-          <option>Data Analyst</option>
+        <select id="vacancyFilter" class="rounded border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:border-fortia-primary">
+          <option value="">Todas las vacantes</option>
+          <option value="Frontend Developer">Frontend Developer</option>
+          <option value="Backend Developer">Backend Developer</option>
+          <option value="UX Designer">UX Designer</option>
+          <option value="DevOps Engineer">DevOps Engineer</option>
+          <option value="Data Analyst">Data Analyst</option>
+          <option value="Product Manager">Product Manager</option>
+          <option value="QA Engineer">QA Engineer</option>
         </select>
-        <select class="rounded border border-gray-200 px-3 py-2 text-sm focus:border-fortia-primary">
-          <option>Todos los estados</option>
-          <option>Nuevo</option>
-          <option>En revisión</option>
-          <option>Entrevista</option>
-          <option>Oferta</option>
-          <option>Contratado</option>
-          <option>Rechazado</option>
+        <select id="statusFilter" class="rounded border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:border-fortia-primary">
+          <option value="">Todos los estados</option>
+          <option value="Nuevo">Nuevo</option>
+          <option value="En revisión">En revisión</option>
+          <option value="Entrevista">Entrevista</option>
+          <option value="Oferta">Oferta</option>
+          <option value="Contratado">Contratado</option>
+          <option value="Rechazado">Rechazado</option>
+        </select>
+        <select id="sortFilter" class="rounded border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 text-sm focus:border-fortia-primary">
+          <option value="">Ordenar por</option>
+          <option value="name">Nombre</option>
+          <option value="match">Match %</option>
+          <option value="date">Fecha aplicación</option>
+          <option value="status">Estado</option>
         </select>
       </div>
       <div class="flex gap-2">
-        <button class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-200 transition-colors">
+        <button class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
           📊 Exportar
         </button>
         <button class="bg-fortia-primary text-white px-4 py-2 rounded-lg hover:bg-fortia-primary/90 transition-colors">
@@ -46,65 +56,71 @@
   </div>
 
   <!-- Lista de candidatos -->
-  <div class="bg-white rounded-xl shadow-card overflow-hidden">
+  <div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl shadow-card overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full">
-        <thead class="bg-slate-50 border-b border-slate-200">
+        <thead class="bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
           <tr>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Candidato</th>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Vacante</th>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Estado</th>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Match</th>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Aplicó</th>
-            <th class="text-left py-3 px-4 font-medium text-slate-700">Acciones</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Candidato</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Vacante</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Estado</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Match</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Aplicó</th>
+            <th class="text-left py-3 px-4 font-medium text-slate-700 dark:text-slate-300">Acciones</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-200">
+        <tbody id="candidatesTableBody" class="divide-y divide-slate-200 dark:divide-slate-700">
           <!-- Candidato 1 -->
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="María García" 
+              data-email="maria.garcia@email.com" 
+              data-vacancy="Frontend Developer" 
+              data-status="En revisión" 
+              data-match="92" 
+              data-date="2024-01-15T10:30:00">
             <td class="py-4 px-4">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
                   MG
                 </div>
                 <div>
-                  <p class="font-medium text-slate-800">María García</p>
-                  <p class="text-sm text-slate-500">maria.garcia@email.com</p>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">María García</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">maria.garcia@email.com</p>
                 </div>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="font-medium text-slate-800">Frontend Developer</p>
-              <p class="text-sm text-slate-500">Tecnología</p>
+              <p class="font-medium text-slate-800 dark:text-slate-200">Frontend Developer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología</p>
             </td>
             <td class="py-4 px-4">
-              <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">En revisión</span>
+              <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs rounded-full">En revisión</span>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <div class="w-16 bg-slate-200 rounded-full h-2">
-                  <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 92%"></div>
                 </div>
-                <span class="text-sm font-medium text-green-600">92%</span>
+                <span class="text-sm font-medium text-green-600 dark:text-green-400">92%</span>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="text-sm text-slate-600">hace 5 min</p>
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 5 min</p>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                   </svg>
                 </button>
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Programar entrevista">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Programar entrevista" data-action="interview">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3h8v4M5 21h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/>
                   </svg>
                 </button>
-                <button class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Rechazar">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
@@ -114,50 +130,56 @@
           </tr>
 
           <!-- Candidato 2 -->
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Carlos Mendoza" 
+              data-email="carlos.mendoza@email.com" 
+              data-vacancy="Frontend Developer" 
+              data-status="Entrevista" 
+              data-match="88" 
+              data-date="2024-01-15T09:15:00">
             <td class="py-4 px-4">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-semibold">
                   CM
                 </div>
                 <div>
-                  <p class="font-medium text-slate-800">Carlos Mendoza</p>
-                  <p class="text-sm text-slate-500">carlos.mendoza@email.com</p>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Carlos Mendoza</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">carlos.mendoza@email.com</p>
                 </div>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="font-medium text-slate-800">Frontend Developer</p>
-              <p class="text-sm text-slate-500">Tecnología</p>
+              <p class="font-medium text-slate-800 dark:text-slate-200">Frontend Developer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología</p>
             </td>
             <td class="py-4 px-4">
-              <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Entrevista</span>
+              <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs rounded-full">Entrevista</span>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <div class="w-16 bg-slate-200 rounded-full h-2">
-                  <div class="bg-green-500 h-2 rounded-full" style="width: 88%"></div>
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 88%"></div>
                 </div>
-                <span class="text-sm font-medium text-green-600">88%</span>
+                <span class="text-sm font-medium text-green-600 dark:text-green-400">88%</span>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="text-sm text-slate-600">hace 1 hora</p>
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 1 hora</p>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                   </svg>
                 </button>
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver entrevista">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver entrevista" data-action="interview">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                   </svg>
                 </button>
-                <button class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="Rechazar">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
@@ -167,49 +189,358 @@
           </tr>
 
           <!-- Candidato 3 -->
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Ana López" 
+              data-email="ana.lopez@email.com" 
+              data-vacancy="UX Designer" 
+              data-status="Contratado" 
+              data-match="95" 
+              data-date="2024-01-15T08:00:00">
             <td class="py-4 px-4">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
                   AL
                 </div>
                 <div>
-                  <p class="font-medium text-slate-800">Ana López</p>
-                  <p class="text-sm text-slate-500">ana.lopez@email.com</p>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Ana López</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">ana.lopez@email.com</p>
                 </div>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="font-medium text-slate-800">UX Designer</p>
-              <p class="text-sm text-slate-500">Diseño</p>
+              <p class="font-medium text-slate-800 dark:text-slate-200">UX Designer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Diseño</p>
             </td>
             <td class="py-4 px-4">
-              <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Contratado</span>
+              <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs rounded-full">Contratado</span>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <div class="w-16 bg-slate-200 rounded-full h-2">
-                  <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 95%"></div>
                 </div>
-                <span class="text-sm font-medium text-green-600">95%</span>
+                <span class="text-sm font-medium text-green-600 dark:text-green-400">95%</span>
               </div>
             </td>
             <td class="py-4 px-4">
-              <p class="text-sm text-slate-600">hace 2 horas</p>
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 2 horas</p>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center gap-2">
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver perfil">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                   </svg>
                 </button>
-                <button class="p-2 text-slate-400 hover:text-fortia-primary transition-colors" title="Ver contrato">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver contrato" data-action="contract">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                   </svg>
                 </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 4 -->
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Diego Ramírez" 
+              data-email="diego.ramirez@email.com" 
+              data-vacancy="Backend Developer" 
+              data-status="Nuevo" 
+              data-match="85" 
+              data-date="2024-01-14T16:45:00">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  DR
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Diego Ramírez</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">diego.ramirez@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800 dark:text-slate-200">Backend Developer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-full">Nuevo</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-yellow-500 dark:bg-yellow-400 h-2 rounded-full" style="width: 85%"></div>
+                </div>
+                <span class="text-sm font-medium text-yellow-600 dark:text-yellow-400">85%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 1 día</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Programar entrevista" data-action="interview">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3h8v4M5 21h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 5 -->
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Sofía Herrera" 
+              data-email="sofia.herrera@email.com" 
+              data-vacancy="DevOps Engineer" 
+              data-status="Oferta" 
+              data-match="91" 
+              data-date="2024-01-14T14:20:00">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  SH
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Sofía Herrera</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">sofia.herrera@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800 dark:text-slate-200">DevOps Engineer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs rounded-full">Oferta</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 91%"></div>
+                </div>
+                <span class="text-sm font-medium text-green-600 dark:text-green-400">91%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 1 día</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver oferta" data-action="offer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 6 -->
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Roberto Silva" 
+              data-email="roberto.silva@email.com" 
+              data-vacancy="Data Analyst" 
+              data-status="En revisión" 
+              data-match="78" 
+              data-date="2024-01-14T11:30:00">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  RS
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Roberto Silva</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">roberto.silva@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800 dark:text-slate-200">Data Analyst</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Datos</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs rounded-full">En revisión</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-yellow-500 dark:bg-yellow-400 h-2 rounded-full" style="width: 78%"></div>
+                </div>
+                <span class="text-sm font-medium text-yellow-600 dark:text-yellow-400">78%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 2 días</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Programar entrevista" data-action="interview">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3h8v4M5 21h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 7 -->
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Laura Martínez" 
+              data-email="laura.martinez@email.com" 
+              data-vacancy="Product Manager" 
+              data-status="Entrevista" 
+              data-match="89" 
+              data-date="2024-01-13T15:45:00">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  LM
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Laura Martínez</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">laura.martinez@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800 dark:text-slate-200">Product Manager</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Producto</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs rounded-full">Entrevista</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-green-500 dark:bg-green-400 h-2 rounded-full" style="width: 89%"></div>
+                </div>
+                <span class="text-sm font-medium text-green-600 dark:text-green-400">89%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 2 días</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver entrevista" data-action="interview">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" title="Rechazar" data-action="reject">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Candidato 8 -->
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors" 
+              data-name="Javier Torres" 
+              data-email="javier.torres@email.com" 
+              data-vacancy="QA Engineer" 
+              data-status="Rechazado" 
+              data-match="65" 
+              data-date="2024-01-13T10:15:00">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-semibold">
+                  JT
+                </div>
+                <div>
+                  <p class="font-medium text-slate-800 dark:text-slate-200">Javier Torres</p>
+                  <p class="text-sm text-slate-500 dark:text-slate-400">javier.torres@email.com</p>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="font-medium text-slate-800 dark:text-slate-200">QA Engineer</p>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Tecnología</p>
+            </td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-xs rounded-full">Rechazado</span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <div class="w-16 bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                  <div class="bg-red-500 dark:bg-red-400 h-2 rounded-full" style="width: 65%"></div>
+                </div>
+                <span class="text-sm font-medium text-red-600 dark:text-red-400">65%</span>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <p class="text-sm text-slate-600 dark:text-slate-400">hace 3 días</p>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver perfil" data-action="view">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                </button>
+                <button class="p-2 text-slate-400 dark:text-slate-500 hover:text-fortia-primary dark:hover:text-blue-400 transition-colors" title="Ver feedback" data-action="feedback">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Fila de "sin resultados" -->
+          <tr id="noResultsRow" class="hidden">
+            <td colspan="6" class="px-4 py-8 text-center text-slate-500 dark:text-slate-400">
+              <div class="flex flex-col items-center gap-2">
+                <svg class="w-12 h-12 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <p class="font-medium">No se encontraron candidatos</p>
+                <p class="text-sm">Intenta ajustar los filtros de búsqueda</p>
               </div>
             </td>
           </tr>
@@ -220,17 +551,180 @@
 
   <!-- Paginación -->
   <div class="mt-6 flex items-center justify-between">
-    <p class="text-sm text-slate-600">Mostrando 1-3 de 23 candidatos</p>
+    <p id="resultsCounter" class="text-sm text-slate-600 dark:text-slate-400">Mostrando 1-8 de 8 candidatos</p>
     <div class="flex items-center gap-2">
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">
+      <button class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
         ← Anterior
       </button>
       <button class="px-3 py-2 bg-fortia-primary text-white rounded text-sm">1</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">2</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">3</button>
-      <button class="px-3 py-2 border border-slate-200 rounded text-sm hover:bg-slate-50 transition-colors">
+      <button class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">2</button>
+      <button class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">3</button>
+      <button class="px-3 py-2 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-400 rounded text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
         Siguiente →
       </button>
     </div>
   </div>
 </main>
+
+<script>
+// Filtros funcionales para candidatos
+(function() {
+  function initCandidatesFilters() {
+    const tbody = document.getElementById('candidatesTableBody');
+    const noRow = document.getElementById('noResultsRow');
+    const counter = document.getElementById('resultsCounter');
+    
+    if (!tbody || !noRow) {
+      console.warn('Elementos no encontrados');
+      return;
+    }
+
+    const controls = {
+      search: document.getElementById('candidateSearch'),
+      vacancy: document.getElementById('vacancyFilter'),
+      status: document.getElementById('statusFilter'),
+      sort: document.getElementById('sortFilter'),
+    };
+
+    const removeAccents = (str) => (str || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+
+    const getAllRows = () => [...tbody.querySelectorAll('tr[data-name]')];
+
+    function applyFilters() {
+      const searchTerm = removeAccents(controls.search?.value || '');
+      const vacancyFilter = controls.vacancy?.value || '';
+      const statusFilter = controls.status?.value || '';
+      const sortBy = controls.sort?.value || '';
+
+      const allRows = getAllRows();
+      const visible = [];
+
+      // Filtrar filas
+      allRows.forEach(tr => {
+        const data = tr.dataset;
+        let show = true;
+
+        // Filtro de búsqueda
+        if (searchTerm) {
+          const searchText = removeAccents(`${data.name} ${data.email}`);
+          show = searchText.includes(searchTerm);
+        }
+
+        // Filtro por vacante
+        if (show && vacancyFilter) {
+          show = data.vacancy === vacancyFilter;
+        }
+
+        // Filtro por estado
+        if (show && statusFilter) {
+          show = data.status === statusFilter;
+        }
+
+        tr.classList.toggle('hidden', !show);
+        if (show) visible.push(tr);
+      });
+
+      // Ordenamiento
+      if (sortBy && visible.length > 0) {
+        const statusOrder = {
+          'Nuevo': 1, 'En revisión': 2, 'Entrevista': 3,
+          'Oferta': 4, 'Contratado': 5, 'Rechazado': 6
+        };
+        
+        visible.sort((a, b) => {
+          const da = a.dataset, db = b.dataset;
+          
+          switch (sortBy) {
+            case 'name':
+              return da.name.localeCompare(db.name);
+            case 'match':
+              return Number(db.match) - Number(da.match);
+            case 'date':
+              return new Date(db.date) - new Date(da.date);
+            case 'status':
+              return (statusOrder[da.status] || 999) - (statusOrder[db.status] || 999);
+            default:
+              return 0;
+          }
+        });
+
+        visible.forEach(tr => tbody.appendChild(tr));
+      }
+
+      // Mostrar/ocultar mensaje de sin resultados
+      const isEmpty = visible.length === 0;
+      noRow.classList.toggle('hidden', !isEmpty);
+      if (isEmpty) tbody.appendChild(noRow);
+
+      // Actualizar contador
+      if (counter) {
+        counter.textContent = `Mostrando ${visible.length} de ${allRows.length} candidatos`;
+      }
+    }
+
+    // Event listeners
+    let debounceTimer;
+    if (controls.search) {
+      controls.search.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(applyFilters, 300);
+      });
+    }
+
+    ['vacancy', 'status', 'sort'].forEach(key => {
+      if (controls[key]) {
+        controls[key].addEventListener('change', applyFilters);
+      }
+    });
+
+    // Acciones de botones
+    tbody.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const tr = btn.closest('tr[data-name]');
+      if (!tr) return;
+
+      const name = tr.dataset.name;
+      const action = btn.dataset.action;
+
+      switch (action) {
+        case 'view':
+          alert(`Ver perfil de: ${name}`);
+          break;
+        case 'interview':
+          alert(`Programar entrevista con: ${name}`);
+          break;
+        case 'reject':
+          if (confirm(`¿Rechazar a ${name}?`)) {
+            alert(`${name} rechazado`);
+          }
+          break;
+        case 'contract':
+          alert(`Ver contrato de: ${name}`);
+          break;
+        case 'offer':
+          alert(`Ver oferta para: ${name}`);
+          break;
+        case 'feedback':
+          alert(`Ver feedback de: ${name}`);
+          break;
+      }
+    });
+
+    // Aplicar filtros iniciales
+    applyFilters();
+    console.log('Filtros de candidatos inicializados correctamente');
+  }
+
+  // Ejecutar cuando esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initCandidatesFilters, 100));
+  } else {
+    setTimeout(initCandidatesFilters, 100);
+  }
+})();
+</script>
